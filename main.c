@@ -43,7 +43,7 @@ int main()
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 900;
+    const int screenWidth = 1000;
     const int screenHeight = 550;
 
     InitWindow(screenWidth, screenHeight, "raylib");
