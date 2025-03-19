@@ -1,108 +1,100 @@
-/*******************************************************************************************
-*
-*   raylib [core] example - Basic 3d example
-*
-*   Welcome to raylib!
-*
-*   To compile example, just press F5.
-*   Note that compiled executable is placed in the same folder as .c file
-*
-*   You can find all basic examples on C:\raylib\raylib\examples folder or
-*   raylib official webpage: www.raylib.com
-*
-*   Enjoy using raylib. :)
-*
-*   This example has been created using raylib 1.0 (www.raylib.com)
-*   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
-*
-*   Copyright (c) 2013-2024 Ramon Santamaria (@raysan5)
-*
-********************************************************************************************/
-
 #include "raylib.h"
+#include <string.h>
+#include <stdio.h>
 
-#if defined(PLATFORM_WEB)
-    #include <emscripten/emscripten.h>
-#endif
-
-//----------------------------------------------------------------------------------
-// Local Variables Definition (local to this module)
-//----------------------------------------------------------------------------------
-Camera camera = { 0 };
-Vector3 cubePosition = { 0 };
-
-//----------------------------------------------------------------------------------
-// Local Functions Declaration
-//----------------------------------------------------------------------------------
-static void UpdateDrawFrame(void);          // Update and draw one frame
-
-//----------------------------------------------------------------------------------
-// Main entry point
-//----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
-    const int screenWidth = 1000;
-    const int screenHeight = 550;
+    const int screenWidth = 1366;
+    const int screenHeight = 768;
+    const int recWidth = 1366;
+    const int recHeight = 768;
+    
+    const int textHeight = 100;
+    const int smallTextHeight = 50;
+    
+    const int smallRecWidth = 400;
+    const int smallRecHeight = 80;
+    
+    char text[] = "<NOME DO JOGO>";
+    int textWidth = 0;
+    int textLength = strlen(text);
+    for (int i = 0; i < textLength; i++) {(text[i] != ' ')?(textWidth += 70):(textWidth += 30);} textWidth--;
+    int textPosX = (screenWidth - textWidth)/2;
+    int textPosY = (screenHeight - textHeight)/2;
+    
+    int quit = 0;
+    
+    char smallText1[] = "Play";
+    int smallText1Width = strlen(smallText1)*29;
+    int smallText1PosX = (screenWidth - smallText1Width)/2;
+    int smallText1PosY = (screenHeight - smallTextHeight)/2;
+    
+    char smallText2[] = "Settings";
+    int smallText2Width = strlen(smallText2)*26;
+    int smallText2PosX = (screenWidth - smallText2Width)/2;
+    int smallText2PosY = (screenHeight - smallTextHeight)/2;
+    
+    char smallText3[] = "Credits";
+    int smallText3Width = strlen(smallText3)*26;
+    int smallText3PosX = (screenWidth - smallText3Width)/2;
+    int smallText3PosY = (screenHeight - smallTextHeight)/2;
+    
+    char smallText4[] = "Quit";
+    int smallText4Width = strlen(smallText4)*24;
+    int smallText4PosX = (screenWidth - smallText4Width)/2;
+    int smallText4PosY = (screenHeight - smallTextHeight)/2;
+    
+    Rectangle rec = {(screenWidth - recWidth)/2, (screenHeight - recHeight)/2, recWidth, recHeight};
+    Rectangle smallRec0 = {(screenWidth - smallRecWidth)/2, (screenHeight - smallRecHeight)/2 - 40, smallRecWidth, smallRecHeight};
+    Rectangle smallRec1 = {smallRec0.x, smallRec0.y + 100, smallRec0.width, smallRec0.height};
+    Rectangle smallRec2 = {smallRec0.x, smallRec0.y + 200, smallRec0.width, smallRec0.height};
+    Rectangle smallRec3 = {smallRec0.x, smallRec0.y + 300, smallRec0.width, smallRec0.height};
 
-    InitWindow(screenWidth, screenHeight, "raylib");
+    InitWindow(screenWidth, screenHeight, "Projeto FPI");
+    SetTargetFPS(60);
 
-    camera.position = (Vector3){ 10.0f, 10.0f, 8.0f };
-    camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };
-    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
-    camera.fovy = 60.0f;
-    camera.projection = CAMERA_PERSPECTIVE;
-
-    //--------------------------------------------------------------------------------------
-
-#if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
-#else
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
-
-    // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    while (!WindowShouldClose())
     {
-        UpdateDrawFrame();
-    }
-#endif
+        if (quit > 0 && quit < 10) quit++;
+        if (quit == 10) CloseWindow();
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();                  // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+        BeginDrawing();
+
+            ClearBackground(BLACK);
+            DrawRectangleLinesEx(rec, 5, LIGHTGRAY);
+
+            DrawText(text, textPosX, textPosY - 240, textHeight, LIGHTGRAY);
+            DrawRectangleRounded(smallRec0, 0.5, 10, LIGHTGRAY);
+            DrawRectangleRounded(smallRec1, 0.5, 10, LIGHTGRAY);
+            DrawRectangleRounded(smallRec2, 0.5, 10, LIGHTGRAY);
+            DrawRectangleRounded(smallRec3, 0.5, 10, LIGHTGRAY);
+            DrawText(smallText1, smallText1PosX, smallText1PosY - 40, smallTextHeight, BLACK);
+            DrawText(smallText2, smallText2PosX, smallText2PosY + 60, smallTextHeight, BLACK);
+            DrawText(smallText3, smallText3PosX, smallText3PosY + 160, smallTextHeight, BLACK);
+            DrawText(smallText4, smallText4PosX, smallText4PosY + 260, smallTextHeight, BLACK);
+            
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), smallRec0)) {
+                DrawRectangleRounded(smallRec0, 0.5, 10, BLACK);
+                DrawText(smallText1, smallText1PosX, smallText1PosY - 40, smallTextHeight, LIGHTGRAY);
+            }
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), smallRec1)) {
+                DrawRectangleRounded(smallRec1, 0.5, 10, BLACK);
+                DrawText(smallText2, smallText2PosX, smallText2PosY + 60, smallTextHeight, LIGHTGRAY);
+            }
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), smallRec2)) {
+                DrawRectangleRounded(smallRec2, 0.5, 10, BLACK);
+                DrawText(smallText3, smallText3PosX, smallText3PosY + 160, smallTextHeight, LIGHTGRAY);
+            }
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), smallRec3)) {
+                DrawRectangleRounded(smallRec3, 0.5, 10, BLACK);
+                DrawText(smallText4, smallText4PosX, smallText4PosY + 260, smallTextHeight, LIGHTGRAY);
+                quit = 1;
+            }
+
+        EndDrawing();
+    }
+
+    CloseWindow();
 
     return 0;
-}
-
-// Update and draw game frame
-static void UpdateDrawFrame(void)
-{
-    // Update
-    //----------------------------------------------------------------------------------
-    UpdateCamera(&camera, CAMERA_ORBITAL);
-    //----------------------------------------------------------------------------------
-
-    // Draw
-    //----------------------------------------------------------------------------------
-    BeginDrawing();
-
-        ClearBackground(RAYWHITE);
-
-        BeginMode3D(camera);
-
-            DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, RED);
-            DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, MAROON);
-            DrawGrid(10, 1.0f);
-
-        EndMode3D();
-
-        DrawText("This is a raylib example", 10, 40, 20, DARKGRAY);
-
-        DrawFPS(10, 10);
-
-    EndDrawing();
-    //----------------------------------------------------------------------------------
 }
