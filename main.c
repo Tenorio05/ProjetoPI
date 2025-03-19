@@ -6,6 +6,7 @@ int main(void)
 {
     const int screenWidth = 1366;
     const int screenHeight = 768;
+
     const int recWidth = 1366;
     const int recHeight = 768;
     
@@ -21,8 +22,6 @@ int main(void)
     for (int i = 0; i < textLength; i++) {(text[i] != ' ')?(textWidth += 70):(textWidth += 30);} textWidth--;
     int textPosX = (screenWidth - textWidth)/2;
     int textPosY = (screenHeight - textHeight)/2;
-    
-    int quit = 0;
     
     char smallText1[] = "Play";
     int smallText1Width = strlen(smallText1)*29;
@@ -50,14 +49,16 @@ int main(void)
     Rectangle smallRec2 = {smallRec0.x, smallRec0.y + 200, smallRec0.width, smallRec0.height};
     Rectangle smallRec3 = {smallRec0.x, smallRec0.y + 300, smallRec0.width, smallRec0.height};
 
+    int clickedSmallRec0 = 0;
+    int clickedSmallRec1 = 0;
+    int clickedSmallRec2 = 0;
+    int clickedSmallRec3 = 0;
+
     InitWindow(screenWidth, screenHeight, "Projeto FPI");
     SetTargetFPS(60);
 
     while (!WindowShouldClose())
     {
-        if (quit > 0 && quit < 10) quit++;
-        if (quit == 10) break;
-
         BeginDrawing();
 
             ClearBackground(BLACK);
@@ -73,23 +74,30 @@ int main(void)
             DrawText(smallText3, smallText3PosX, smallText3PosY + 160, smallTextHeight, BLACK);
             DrawText(smallText4, smallText4PosX, smallText4PosY + 260, smallTextHeight, BLACK);
             
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), smallRec0)) {
+            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                clickedSmallRec0 = CheckCollisionPointRec(GetMousePosition(), smallRec0);
+                clickedSmallRec1 = CheckCollisionPointRec(GetMousePosition(), smallRec1);
+                clickedSmallRec2 = CheckCollisionPointRec(GetMousePosition(), smallRec2);
+                clickedSmallRec3 = CheckCollisionPointRec(GetMousePosition(), smallRec3);
+            }
+            
+            if (clickedSmallRec0 && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
                 DrawRectangleRounded(smallRec0, 0.5, 10, BLACK);
                 DrawText(smallText1, smallText1PosX, smallText1PosY - 40, smallTextHeight, LIGHTGRAY);
             }
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), smallRec1)) {
+            if (clickedSmallRec1 && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
                 DrawRectangleRounded(smallRec1, 0.5, 10, BLACK);
                 DrawText(smallText2, smallText2PosX, smallText2PosY + 60, smallTextHeight, LIGHTGRAY);
             }
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), smallRec2)) {
+            if (clickedSmallRec2 && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
                 DrawRectangleRounded(smallRec2, 0.5, 10, BLACK);
                 DrawText(smallText3, smallText3PosX, smallText3PosY + 160, smallTextHeight, LIGHTGRAY);
             }
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), smallRec3)) {
+            if (clickedSmallRec3 && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
                 DrawRectangleRounded(smallRec3, 0.5, 10, BLACK);
                 DrawText(smallText4, smallText4PosX, smallText4PosY + 260, smallTextHeight, LIGHTGRAY);
-                quit = 1;
             }
+
 
         EndDrawing();
     }
