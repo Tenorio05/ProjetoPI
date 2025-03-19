@@ -56,7 +56,7 @@ int main(void)
     while (!WindowShouldClose())
     {
         if (quit > 0 && quit < 10) quit++;
-        if (quit == 10) CloseWindow();
+        if (quit == 10) break;
 
         BeginDrawing();
 
