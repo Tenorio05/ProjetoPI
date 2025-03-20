@@ -4,8 +4,8 @@
 
 int main(void)
 {
-    const int screenWidth = 1366;
-    const int screenHeight = 768;
+    const int screenWidth = 1280;
+    const int screenHeight = 720;
 
     const int bigTextHeight = 100;
     const int smallTextHeight = 50;
@@ -64,6 +64,9 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "Projeto FPI");
     SetTargetFPS(60);
+    char largura[50], altura[50];
+    sprintf(largura, "largura: %d", screenWidth);
+    sprintf(altura, "altura: %d", screenHeight);
 
     while (!WindowShouldClose())
     {
@@ -71,6 +74,8 @@ int main(void)
 
             ClearBackground(BLACK);
             DrawRectangleLinesEx(borderRec, 5, LIGHTGRAY);
+            DrawText(largura, 1280/2, 10, 1, LIGHTGRAY);
+            DrawText(altura, 1280/2, 20, 1, LIGHTGRAY);
 
             DrawText(nameText, nameTextPosX, nameTextPosY - 240, bigTextHeight, LIGHTGRAY);
             DrawRectangleRounded(playRec, 0.5, 10, LIGHTGRAY);
