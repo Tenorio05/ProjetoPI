@@ -9,6 +9,7 @@
 		"**/*.exe": true,
 	},
 	"files.associations": {
-		"string.h": "c"
+		"string.h": "c",
+		"button.h": "c"
 	}
 }

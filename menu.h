@@ -1,5 +1,5 @@
-#ifndef MAIN
-#define MAIN
+#ifndef MENU
+#define MENU
 
 #include "raylib.h"
 #include "button.h"
@@ -9,5 +9,5 @@ typedef struct Menu {
     Color backgroundColor;
 } Menu;
 
-#include "main.c"
+#include "menu.c"
 #endif

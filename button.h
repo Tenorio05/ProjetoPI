@@ -8,7 +8,6 @@ typedef struct Button {
     Color textColor;
     char text[100];
     int x, y;
-    int textSize;
     int textLen;
     int textWidth;
 } Button;

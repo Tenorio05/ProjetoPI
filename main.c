@@ -63,6 +63,7 @@ int main(void)
     int quitGame = 0;
 
     InitWindow(screenWidth, screenHeight, "Projeto FPI");
+    //ToggleFullscreen();
     SetTargetFPS(60);
 
     while (!WindowShouldClose())
