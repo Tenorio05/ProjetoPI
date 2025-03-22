@@ -6,12 +6,12 @@
 #define SCREEN_HEIGHT 720
 
 GameScreen currentScreen = MENU;
-Player player; 
+Player player;
+EnemyList enemy_list;
 int quitting = 0;
 
 void UpdateDrawFrame(void);
 void UpdateGame(void);
-
 
 int main(void)
 {
@@ -36,7 +36,7 @@ void UpdateGame() {
             UpdateMenu(); 
             break;
         case GAMEPLAY: 
-            UpdateGameplay();
+            UpdateGameplay(&player, &enemy_list);
             break;
         case SETTINGS: 
             UpdateSettings(); 
@@ -57,7 +57,7 @@ void UpdateDrawFrame(void) {
             DrawMenu(); 
             break;
         case GAMEPLAY: 
-            DrawGame(player); 
+            DrawGame(player, enemy_list); 
             break;
         case SETTINGS: 
             DrawSettings(); 

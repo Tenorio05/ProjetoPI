@@ -15,7 +15,6 @@ void DrawMenu(void);
 void DrawSettings(void);
 void DrawCredits(void);
 void UpdateMenu(void);
-void UpdateGameplay(void);
 void UpdateSettings(void);
 void UpdateCredits(void);
 
