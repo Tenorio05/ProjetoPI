@@ -1,13 +1,23 @@
-#ifndef MENU
-#define MENU
+#ifndef MENU_H
+#define MENU_H
 
-#include "raylib.h"
-#include "button.h"
+typedef enum GameScreen {
+    MENU = 0,
+    GAMEPLAY = 1,
+    SETTINGS = 2,
+    CREDITS = 3,
+    QUIT = 4
+} GameScreen;
 
-typedef struct Menu {
-    Button title, playButton, settButton, credButton, quitButton;
-    Color backgroundColor;
-} Menu;
+extern GameScreen currentScreen;
+
+void DrawMenu(void);
+void DrawSettings(void);
+void DrawCredits(void);
+void UpdateMenu(void);
+void UpdateGameplay(void);
+void UpdateSettings(void);
+void UpdateCredits(void);
 
 #include "menu.c"
 #endif
