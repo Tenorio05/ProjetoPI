@@ -12,6 +12,7 @@
 GameScreen currentScreen = MENU; // Determina em que cenário o jogador está (MENU, GAMEPLAY, QUIT)
 Player player;
 EnemyList enemy_list;
+Font myfont;
 
 int quitting = 0;
 
@@ -24,6 +25,7 @@ int main(void)
     SetTargetFPS(60);
     CreatePlayer(&player);
     InitTexts();
+    myfont = LoadFont("Minecraftia-Regular.ttf");
 
     while (!WindowShouldClose() && quitting == 0)
     {
@@ -31,6 +33,7 @@ int main(void)
         UpdateDrawFrame();
     }
     
+    UnloadFont(myfont);
     CloseWindow();
 
     return 0;
@@ -63,7 +66,7 @@ void UpdateDrawFrame(void) {
             DrawMenu(); // Printa na tela o menu 
             break;
         case GAMEPLAY: 
-            DrawGame(player, enemy_list); // Desenha na tela o player e inimigos
+            DrawGame(player, enemy_list, myfont); // Desenha na tela o player e inimigos
             break;
         case SETTINGS: 
             DrawSettings(); 

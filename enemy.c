@@ -1,6 +1,8 @@
 #include "raylib.h"
 #include "enemy.h"
 #include "player.h"
+#include "menu.h"
+#include "typing.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,17 +16,28 @@ char shortwords[200][15];
 
 void InitTexts(void) {
     FILE *file = fopen("shortwords.txt", "r");
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 100; i++) {
         fscanf(file, "%s\n", shortwords[i]);
     }
     fclose(file);
 }
 
-void DrawEnemies(EnemyList enemy_list) {
+void DrawEnemies(EnemyList enemy_list, Font myfont) {
     for (int i = 0; i < enemy_list.qty_enemies; i++) {
         Enemy enemy = enemy_list.enemies[i];
+        int word_size = strlen(enemy.word);
         DrawRectangle(enemy.position.x, enemy.position.y, enemy.width, enemy.height, RED);
-        DrawText(enemy.word, enemy.position.x, enemy.position.y + 30, 30, WHITE);
+        if (enemy.index_typing == -1) {
+            DrawText(enemy.word, enemy.position.x, enemy.position.y + 30, 30, WHITE);
+        } else {
+            for (int i = 0; i < word_size; i++) {
+                if (i <= enemy.index_typing) {
+                    DrawTextEx(myfont, TextFormat("%c", enemy.word[i]), ((Vector2){ enemy.position.x + (18 * i), enemy.position.y + 30 }), 30, 10, YELLOW);
+                } else {
+                    DrawTextEx(myfont, TextFormat("%c", enemy.word[i]), ((Vector2){ enemy.position.x + (18 * i), enemy.position.y + 30 }), 30, 10, RED);
+                }
+            }
+        }
     }
 }
 
@@ -37,17 +50,26 @@ void SpawnEnemy(EnemyList* enemy_list) {
         Enemy enemy;
         enemy.width = tamanho_inimigo;
         enemy.height = tamanho_inimigo;
-        enemy.speed = 5;
-        enemy.position.x = GetRandomValue(0, 1280);
-        enemy.position.y = 0;
+        enemy.speed = 2.5;
+        enemy.position.x = GetRandomValue(-200, 1380);
+        enemy.position.y = -100;
         strcpy(enemy.word, shortwords[GetRandomValue(0, 49)]);
+        enemy.locked = 0;
+        enemy.index_typing = -1;
 
         enemy_list->enemies[enemy_list->qty_enemies] = enemy;
-        enemy_list->qty_enemies++;
+        enemy_list->qty_enemies = enemy_list->qty_enemies + 1;
     } else {
         spawn_timer += GetFrameTime();
     }
 }
+
+void RemoveEnemy(EnemyList* enemy_list, int index_enemy) {
+    for (int i = index_enemy; i < enemy_list->qty_enemies; i++) {
+        enemy_list->enemies[i] = enemy_list->enemies[i + 1];
+    }
+    enemy_list->qty_enemies--;
+} 
 
 void MoveEnemies(EnemyList* enemy_list, Player* player) {
     for (int i = 0; i < enemy_list->qty_enemies; i++) {
@@ -60,10 +82,10 @@ void MoveEnemies(EnemyList* enemy_list, Player* player) {
             enemy_list->enemies[i].position.x += (dx / distance) * enemy.speed;
             enemy_list->enemies[i].position.y += (dy / distance) * enemy.speed;
         } else {
-            for (int j = i; j < enemy_list->qty_enemies - 1; j++) {
-                enemy_list->enemies[j] = enemy_list->enemies[j + 1];
+            if (enemy_list->enemies[i].locked) {
+                state = NOTLOCKED;
             }
-            enemy_list->qty_enemies--;
+            RemoveEnemy(enemy_list, i);
             i--;
         }
     }
