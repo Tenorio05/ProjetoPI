@@ -1,23 +1,29 @@
 #include "raylib.h"
 #include "menu.h"
 #include "game.h"
+#include "player.h"
+#include "enemy.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
 
-GameScreen currentScreen = MENU;
+GameScreen currentScreen = MENU; // Determina em que cenário o jogador está (MENU, GAMEPLAY, QUIT)
 Player player;
 EnemyList enemy_list;
+
 int quitting = 0;
 
-void UpdateDrawFrame(void);
-void UpdateGame(void);
+void UpdateDrawFrame(void); // Responsável por desenhar na tela o player, inimigos, menu...
+void UpdateGame(void); // Atualiza a movimentação dos inimigos, player, etc.
 
 int main(void)
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Projeto FPI");
     SetTargetFPS(60);
     CreatePlayer(&player);
+    InitTexts();
 
     while (!WindowShouldClose() && quitting == 0)
     {
@@ -33,10 +39,10 @@ int main(void)
 void UpdateGame() {
     switch (currentScreen) {
         case MENU: 
-            UpdateMenu(); 
+            UpdateMenu(); // Lida com a lógica do MENU (Funcionamento dos botões)
             break;
         case GAMEPLAY: 
-            UpdateGameplay(&player, &enemy_list);
+            UpdateGameplay(&player, &enemy_list); // Lida com a lógica do player e inimigos
             break;
         case SETTINGS: 
             UpdateSettings(); 
@@ -54,10 +60,10 @@ void UpdateDrawFrame(void) {
 
     switch (currentScreen) {
         case MENU: 
-            DrawMenu(); 
+            DrawMenu(); // Printa na tela o menu 
             break;
         case GAMEPLAY: 
-            DrawGame(player, enemy_list); 
+            DrawGame(player, enemy_list); // Desenha na tela o player e inimigos
             break;
         case SETTINGS: 
             DrawSettings(); 
@@ -72,6 +78,3 @@ void UpdateDrawFrame(void) {
     
     EndDrawing();
 }
-
-
-
