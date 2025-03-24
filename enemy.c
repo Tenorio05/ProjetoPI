@@ -26,15 +26,21 @@ void DrawEnemies(EnemyList enemy_list, Font myfont) {
     for (int i = 0; i < enemy_list.qty_enemies; i++) {
         Enemy enemy = enemy_list.enemies[i];
         int word_size = strlen(enemy.word);
+        Vector2 word_size_measure = MeasureTextEx(myfont, enemy.word, 30, 0);
+        float center_x_enemy = enemy.position.x + (enemy.width / 2); 
+
+        float position_text_x = center_x_enemy - (word_size_measure.x / 2);
+        float position_text_y = enemy.position.y + (enemy.height * 0.9);
+
         DrawRectangle(enemy.position.x, enemy.position.y, enemy.width, enemy.height, RED);
         if (enemy.index_typing == -1) {
-            DrawTextEx(myfont, enemy.word, ((Vector2){ enemy.position.x, enemy.position.y + 30 }), 30, 0, WHITE);
+            DrawTextEx(myfont, enemy.word, ((Vector2){ position_text_x, position_text_y }), 30, 0, WHITE);
         } else {
             for (int i = 0; i < word_size; i++) {
                 if (i <= enemy.index_typing) {
-                    DrawTextEx(myfont, TextFormat("%c", enemy.word[i]), ((Vector2){ enemy.position.x + (15*i), enemy.position.y + 30 }), 30, 0, YELLOW);
+                    DrawTextEx(myfont, TextFormat("%c", enemy.word[i]), ((Vector2){ position_text_x + (15*i), position_text_y }), 30, 0, YELLOW);
                 } else {
-                    DrawTextEx(myfont, TextFormat("%c", enemy.word[i]), ((Vector2){ enemy.position.x + (15*i), enemy.position.y + 30 }), 30, 0, RED);
+                    DrawTextEx(myfont, TextFormat("%c", enemy.word[i]), ((Vector2){ position_text_x + (15*i), position_text_y }), 30, 0, RED);
                 }
             }
         }
@@ -50,7 +56,7 @@ void SpawnEnemy(EnemyList* enemy_list) {
         Enemy enemy;
         enemy.width = tamanho_inimigo;
         enemy.height = tamanho_inimigo;
-        enemy.speed = 3.5;
+        enemy.speed = 1.5;
         enemy.position.x = GetRandomValue(0, 1280);
         enemy.position.y = -100;
         enemy.locked = 0;

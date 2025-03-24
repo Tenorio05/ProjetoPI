@@ -15,6 +15,8 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list) {
     int key_pressed = GetCharPressed();
     if (key_pressed >= 32 && key_pressed <= 125) {
         HandleTyping(enemy_list, key_pressed);
+    } else if (IsKeyPressed(KEY_BACKSPACE)) {
+        HandleTyping(enemy_list, 259);
     }
     
     SpawnEnemy(enemy_list);
