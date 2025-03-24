@@ -28,13 +28,13 @@ void DrawEnemies(EnemyList enemy_list, Font myfont) {
         int word_size = strlen(enemy.word);
         DrawRectangle(enemy.position.x, enemy.position.y, enemy.width, enemy.height, RED);
         if (enemy.index_typing == -1) {
-            DrawText(enemy.word, enemy.position.x, enemy.position.y + 30, 30, WHITE);
+            DrawTextEx(myfont, enemy.word, ((Vector2){ enemy.position.x, enemy.position.y + 30 }), 30, 0, WHITE);
         } else {
             for (int i = 0; i < word_size; i++) {
                 if (i <= enemy.index_typing) {
-                    DrawTextEx(myfont, TextFormat("%c", enemy.word[i]), ((Vector2){ enemy.position.x + (18 * i), enemy.position.y + 30 }), 30, 10, YELLOW);
+                    DrawTextEx(myfont, TextFormat("%c", enemy.word[i]), ((Vector2){ enemy.position.x + (15*i), enemy.position.y + 30 }), 30, 0, YELLOW);
                 } else {
-                    DrawTextEx(myfont, TextFormat("%c", enemy.word[i]), ((Vector2){ enemy.position.x + (18 * i), enemy.position.y + 30 }), 30, 10, RED);
+                    DrawTextEx(myfont, TextFormat("%c", enemy.word[i]), ((Vector2){ enemy.position.x + (15*i), enemy.position.y + 30 }), 30, 0, RED);
                 }
             }
         }
@@ -50,12 +50,23 @@ void SpawnEnemy(EnemyList* enemy_list) {
         Enemy enemy;
         enemy.width = tamanho_inimigo;
         enemy.height = tamanho_inimigo;
-        enemy.speed = 2.5;
-        enemy.position.x = GetRandomValue(-200, 1380);
+        enemy.speed = 3.5;
+        enemy.position.x = GetRandomValue(0, 1280);
         enemy.position.y = -100;
-        strcpy(enemy.word, shortwords[GetRandomValue(0, 49)]);
         enemy.locked = 0;
         enemy.index_typing = -1;
+        strcpy(enemy.word, shortwords[GetRandomValue(0,99)]);
+        int same_initial = 1;
+        while (same_initial) {
+            same_initial = 0;
+            for (int i = 0; i < enemy_list->qty_enemies; i++) {
+                if (enemy_list->enemies[i].word[0] == enemy.word[0]) {
+                    same_initial = 1;
+                    strcpy(enemy.word, shortwords[GetRandomValue(0,99)]);
+                    break;
+                }
+            }
+        }
 
         enemy_list->enemies[enemy_list->qty_enemies] = enemy;
         enemy_list->qty_enemies = enemy_list->qty_enemies + 1;

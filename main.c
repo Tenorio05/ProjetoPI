@@ -25,7 +25,7 @@ int main(void)
     SetTargetFPS(60);
     CreatePlayer(&player);
     InitTexts();
-    myfont = LoadFont("Minecraftia-Regular.ttf");
+    myfont = LoadFont("COUR.TTF");
 
     while (!WindowShouldClose() && quitting == 0)
     {
