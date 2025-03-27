@@ -1,8 +1,5 @@
 #include "raylib.h"
-#include "enemy.h"
-#include "player.h"
-#include "menu.h"
-#include "typing.h"
+#include "game.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -106,4 +103,8 @@ void MoveEnemies(EnemyList* enemy_list, Player* player) {
             i--;
         }
     }
+}
+
+void TurnToEnemy(Player* player) {
+    DrawRectangle(0, 0, 20, 20, RED);
 }

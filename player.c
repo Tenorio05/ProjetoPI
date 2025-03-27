@@ -1,5 +1,5 @@
 #include "raylib.h"
-#include "player.h"
+#include "game.h"
 
 void CreatePlayer(Player* player) {
     player->width = 25;
@@ -11,8 +11,4 @@ void CreatePlayer(Player* player) {
 
 void DrawPlayer(Player* player) {
     DrawRectangle(player->position.x, player->position.y, player->width, player->height, YELLOW);
-}
-
-void TurnToEnemy(Player* player, EnemyList* enemy) {
-    DrawRectangle(0, 0, 20, 20, RED);
 }

@@ -1,7 +1,6 @@
 #include "raylib.h"
-#include "enemy.h"
+#include "game.h"
 #include <string.h>
-#include "player.h"
 
 StateTyping state = NOTLOCKED;
 
@@ -11,6 +10,7 @@ void HandleTyping(Player* player, EnemyList* enemy_list, int key_pressed) {
             Enemy enemy = enemy_list->enemies[i];
             if (enemy.word[0] == (char) key_pressed) {
                 state = LOCKONENEMY;
+                TurnToEnemy(player);
                 enemy_list->enemies[i].locked = 1;
                 enemy_list->enemies[i].index_typing = 0;
                 break;
