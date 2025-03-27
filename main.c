@@ -66,7 +66,7 @@ void UpdateDrawFrame(void) {
             DrawMenu(); // Printa na tela o menu 
             break;
         case GAMEPLAY: 
-            DrawGame(player, enemy_list, myfont); // Desenha na tela o player e inimigos
+            DrawGame(&player, &enemy_list, myfont); // Desenha na tela o player e inimigos
             break;
         case SETTINGS: 
             DrawSettings(); 

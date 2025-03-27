@@ -19,7 +19,7 @@ typedef struct EnemyList {
 } EnemyList;
 
 void InitTexts(void);
-void DrawEnemies(EnemyList enemy_list, Font myfont);
+void DrawEnemies(EnemyList* enemy_list, Font myfont);
 void SpawnEnemy(EnemyList* enemy_list);
 void MoveEnemies(EnemyList* enemy_list, Player* player);
 void RemoveEnemy(EnemyList* enemy_list, int index_enemy);

@@ -1,10 +1,11 @@
 #include "raylib.h"
 #include "enemy.h"
 #include <string.h>
+#include "player.h"
 
 StateTyping state = NOTLOCKED;
 
-void HandleTyping(EnemyList* enemy_list, int key_pressed) {
+void HandleTyping(Player* player, EnemyList* enemy_list, int key_pressed) {
     if (state == NOTLOCKED) {
         for (int i = 0; i < enemy_list->qty_enemies; i++) {
             Enemy enemy = enemy_list->enemies[i];

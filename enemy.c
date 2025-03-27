@@ -22,9 +22,9 @@ void InitTexts(void) {
     fclose(file);
 }
 
-void DrawEnemies(EnemyList enemy_list, Font myfont) {
-    for (int i = 0; i < enemy_list.qty_enemies; i++) {
-        Enemy enemy = enemy_list.enemies[i];
+void DrawEnemies(EnemyList* enemy_list, Font myfont) {
+    for (int i = 0; i < enemy_list->qty_enemies; i++) {
+        Enemy enemy = enemy_list->enemies[i];
         int word_size = strlen(enemy.word);
         Vector2 word_size_measure = MeasureTextEx(myfont, enemy.word, 30, 0);
         float center_x_enemy = enemy.position.x + (enemy.width / 2); 
