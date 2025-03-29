@@ -1,8 +1,5 @@
 #include "raylib.h"
-#include "menu.h"
 #include "game.h"
-#include "player.h"
-#include "enemy.h"
 #include <stdio.h>
 #include <stdlib.h>
 

@@ -1,8 +1,5 @@
 #include "raylib.h"
 #include "game.h"
-#include "player.h"
-#include "enemy.h"
-#include "typing.h"
 
 
 void DrawGame(Player* player, EnemyList* enemy_list, Font myfont) {

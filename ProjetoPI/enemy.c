@@ -1,8 +1,5 @@
 #include "raylib.h"
-#include "enemy.h"
-#include "player.h"
-#include "menu.h"
-#include "typing.h"
+#include "game.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +8,7 @@
 
 int spawn_interval = 1.0f;
 float spawn_timer = 0.0f;
-int tamanho_inimigos[3] = {20, 30, 40};
+int size_enemies[3] = {20, 30, 40};
 char shortwords[200][15]; 
 
 void InitTexts(void) {
@@ -50,12 +47,12 @@ void DrawEnemies(EnemyList* enemy_list, Font myfont) {
 void SpawnEnemy(EnemyList* enemy_list) {
     if (spawn_timer >= spawn_interval) {
         int i = GetRandomValue(0, 2);
-        int tamanho_inimigo = tamanho_inimigos[i];
+        int size_chosen = size_enemies[i];
         spawn_timer = 0;
 
         Enemy enemy;
-        enemy.width = tamanho_inimigo;
-        enemy.height = tamanho_inimigo;
+        enemy.width = size_chosen;
+        enemy.height = size_chosen;
         enemy.speed = 1.5;
         enemy.position.x = GetRandomValue(0, 1280);
         enemy.position.y = -100;
