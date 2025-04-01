@@ -6,7 +6,7 @@
 #include <string.h>
 
 
-int spawn_interval = 1.0f;
+int spawn_interval = 2.0f;
 float spawn_timer = 0.0f;
 int size_enemies[3] = {20, 30, 40};
 char shortwords[200][15]; 
@@ -88,8 +88,10 @@ void RemoveEnemy(EnemyList* enemy_list, int index_enemy) {
 void MoveEnemies(EnemyList* enemy_list, Player* player) {
     for (int i = 0; i < enemy_list->qty_enemies; i++) {
         Enemy enemy = enemy_list->enemies[i];
-        float dx = player->position.x - enemy.position.x;
-        float dy = player->position.y - enemy.position.y;
+        Vector2 player_center = {player->position.x + player->width / 2, player->position.y + player->height / 2};
+        Vector2 enemy_center = {enemy.position.x + enemy.width / 2, enemy.position.y + enemy.height / 2};
+        float dx = player_center.x - enemy_center.x;
+        float dy = player_center.y - enemy_center.y;
         float distance = sqrt(dx*dx + dy*dy);
 
         if (distance > 30) {

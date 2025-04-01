@@ -20,6 +20,16 @@ typedef struct Enemy {
     int locked;
 } Enemy;
 
+typedef struct Projectile {
+    Vector2 center;
+    float radius;
+} Projectile;
+
+typedef struct ProjectileList {
+    Projectile projectiles[50];
+    int qty_projectiles;
+} ProjectileList;
+
 typedef struct EnemyList {
     Enemy enemies[20];
     int qty_enemies;
@@ -40,8 +50,8 @@ extern StateTyping state;
 
 
 // game.c
-void DrawGame(Player* player, EnemyList* enemy_list, Font myfont);
-void UpdateGameplay(Player* player, EnemyList* enemy_list);
+void DrawGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, Font myfont);
+void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list);
 
 // enemy.c
 void InitTexts(void);
@@ -64,7 +74,12 @@ void DrawPlayer(Player* player);
 void TurnToEnemy(Player* player, EnemyList* enemy_list);
 
 // typing.h
-void HandleTyping(Player* player, EnemyList* enemy_list, int key_pressed);
+void HandleTyping(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, int key_pressed);
+
+// projectile.c
+void UpdateProjectile(ProjectileList* projectile_list);
+void DrawProjectiles(ProjectileList* projectile_list);
+void CreateProjectile(ProjectileList* projectile_list, Player* player);
 
 
 #include "game.c"
@@ -72,4 +87,5 @@ void HandleTyping(Player* player, EnemyList* enemy_list, int key_pressed);
 #include "menu.c"
 #include "player.c"
 #include "typing.c"
+#include "projectile.c"
 #endif

@@ -4,7 +4,7 @@
 
 StateTyping state = NOTLOCKED;
 
-void HandleTyping(Player* player, EnemyList* enemy_list, int key_pressed) {
+void HandleTyping(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, int key_pressed) {
     if (state == NOTLOCKED) {
         for (int i = 0; i < enemy_list->qty_enemies; i++) {
             Enemy enemy = enemy_list->enemies[i];
@@ -13,6 +13,7 @@ void HandleTyping(Player* player, EnemyList* enemy_list, int key_pressed) {
                 enemy_list->enemies[i].locked = 1;
                 enemy_list->enemies[i].index_typing = 0;
                 TurnToEnemy(player, enemy_list);
+                CreateProjectile(projectile_list, player);
                 break;
             }
         }

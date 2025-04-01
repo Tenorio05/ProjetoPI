@@ -10,6 +10,7 @@ GameScreen currentScreen = MENU; // Determina em que cenário o jogador está (M
 Player player;
 EnemyList enemy_list;
 Font myfont;
+ProjectileList projectile_list = {.qty_projectiles = 0};
 
 int quitting = 0;
 
@@ -42,7 +43,7 @@ void UpdateGame() {
             UpdateMenu(); // Lida com a lógica do MENU (Funcionamento dos botões)
             break;
         case GAMEPLAY: 
-            UpdateGameplay(&player, &enemy_list); // Lida com a lógica do player e inimigos
+            UpdateGameplay(&player, &enemy_list, &projectile_list); // Lida com a lógica do player e inimigos
             break;
         case SETTINGS: 
             UpdateSettings(); 
@@ -63,7 +64,7 @@ void UpdateDrawFrame(void) {
             DrawMenu(); // Printa na tela o menu 
             break;
         case GAMEPLAY: 
-            DrawGame(&player, &enemy_list, myfont); // Desenha na tela o player e inimigos
+            DrawGame(&player, &enemy_list, &projectile_list, myfont); // Desenha na tela o player e inimigos
             break;
         case SETTINGS: 
             DrawSettings(); 
