@@ -19,4 +19,5 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* proje
     
     SpawnEnemy(enemy_list);
     MoveEnemies(enemy_list, player);
+    UpdateProjectile(projectile_list, enemy_list);
 }

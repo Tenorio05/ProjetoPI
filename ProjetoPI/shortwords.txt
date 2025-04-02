@@ -96,7 +96,7 @@ flex
 cute
 test
 cut
-AIDS
+aids
 soft
 even
 deal

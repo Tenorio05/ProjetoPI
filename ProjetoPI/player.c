@@ -15,8 +15,6 @@ void CreatePlayer(Player* player) {
 void DrawPlayer(Player* player) {
     Rectangle player_rect = {player->position.x, player->position.y, player->width, player->height};
     Vector2 player_center = {player->width / 2, player->height / 2};
-    DrawText(TextFormat("%f", angle_enemy), 0, 0, 30, WHITE);
-    DrawText(TextFormat("%f", player->angle), 40, 40, 30, RED);
 
     if (abs(angle_enemy - player->angle) > 6) {
         if (angle_enemy < player->angle) {
