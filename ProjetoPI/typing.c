@@ -13,7 +13,7 @@ void HandleTyping(Player* player, EnemyList* enemy_list, ProjectileList* project
                 enemy_list->enemies[i].locked = 1;
                 enemy_list->enemies[i].index_typing = 0;
                 TurnToEnemy(player, enemy_list);
-                CreateProjectile(projectile_list, player);
+                CreateProjectile(projectile_list, player, enemy_list);
                 break;
             }
         }
@@ -26,9 +26,10 @@ void HandleTyping(Player* player, EnemyList* enemy_list, ProjectileList* project
                     enemy_list->enemies[i].locked = 0;
                 } else if (enemy_list->enemies[i].word[enemy_list->enemies[i].index_typing + 1] == key_pressed) {
                     enemy_list->enemies[i].index_typing++;
+                    TurnToEnemy(player, enemy_list);
+
                     if (enemy_list->enemies[i].index_typing == strlen(enemy_list->enemies[i].word) - 1) {
                         state = NOTLOCKED;
-                        TurnToEnemy(player, enemy_list);
                         RemoveEnemy(enemy_list, i);
                     }
                 }

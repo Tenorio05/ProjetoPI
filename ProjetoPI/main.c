@@ -20,7 +20,7 @@ void UpdateGame(void); // Atualiza a movimentação dos inimigos, player, etc.
 int main(void)
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Projeto FPI");
-    SetTargetFPS(60);
+    SetTargetFPS(120);
     CreatePlayer(&player);
     InitTexts();
     myfont = LoadFont("COUR.TTF");

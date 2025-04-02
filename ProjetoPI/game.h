@@ -79,7 +79,7 @@ void HandleTyping(Player* player, EnemyList* enemy_list, ProjectileList* project
 // projectile.c
 void UpdateProjectile(ProjectileList* projectile_list);
 void DrawProjectiles(ProjectileList* projectile_list);
-void CreateProjectile(ProjectileList* projectile_list, Player* player);
+void CreateProjectile(ProjectileList* projectile_list, Player* player, EnemyList* enemy_list);
 
 
 #include "game.c"
