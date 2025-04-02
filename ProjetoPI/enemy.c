@@ -88,10 +88,9 @@ void RemoveEnemy(EnemyList* enemy_list, int index_enemy) {
 void MoveEnemies(EnemyList* enemy_list, Player* player) {
     for (int i = 0; i < enemy_list->qty_enemies; i++) {
         Enemy enemy = enemy_list->enemies[i];
-        Vector2 player_center = {player->position.x + player->width / 2, player->position.y + player->height / 2};
         Vector2 enemy_center = {enemy.position.x + enemy.width / 2, enemy.position.y + enemy.height / 2};
-        float dx = player_center.x - enemy_center.x;
-        float dy = player_center.y - enemy_center.y;
+        float dx = player->position.x - enemy_center.x;
+        float dy = player->position.y - enemy_center.y;
         float distance = sqrt(dx*dx + dy*dy);
 
         if (distance > 30) {

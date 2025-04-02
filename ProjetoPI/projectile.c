@@ -11,7 +11,7 @@ void DrawProjectiles(ProjectileList* projectile_list) {
     }
 }
 
-void UpdateProjectile(ProjectileList* projectile_list) {
+void UpdateProjectile(ProjectileList* projectile_list, EnemyList* enemy_list) {
 
 }
 
@@ -26,16 +26,16 @@ void CreateProjectile(ProjectileList* projectile_list, Player* player, EnemyList
 
     Enemy enemy = enemy_list->enemies[index_locked];
     Vector2 enemy_center = {enemy.position.x + enemy.width / 2, enemy.position.y - enemy.height / 2};
-    Vector2 player_center = {player->position.x + player->width / 2, player->position.y - player->height / 2};
     
-    float dx = player_center.x - enemy_center.x;
-    float dy = player_center.y - enemy_center.y;
+    float dx = player->position.x - enemy_center.x;
+    float dy = player->position.y - enemy_center.y;
 
     Projectile projectile;
-    projectile.center = (Vector2) {player_center.x - ((dx / dy) * 40), player_center.y - 40};
+    projectile.center = (Vector2) {player->position.x - ((dx / dy) * 30), player->position.y - 30};
     projectile.radius = 2;
-    int qty_projectiles = projectile_list->qty_projectiles;
+    projectile.target = enemy;
     
+    int qty_projectiles = projectile_list->qty_projectiles;
     projectile_list->projectiles[qty_projectiles] = projectile;
     projectile_list->qty_projectiles++;
 }

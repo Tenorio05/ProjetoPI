@@ -22,6 +22,8 @@ typedef struct Enemy {
 
 typedef struct Projectile {
     Vector2 center;
+    Enemy target;
+    float speed;
     float radius;
 } Projectile;
 
@@ -77,7 +79,7 @@ void TurnToEnemy(Player* player, EnemyList* enemy_list);
 void HandleTyping(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, int key_pressed);
 
 // projectile.c
-void UpdateProjectile(ProjectileList* projectile_list);
+void UpdateProjectile(ProjectileList* projectile_list, EnemyList* enemy_list);
 void DrawProjectiles(ProjectileList* projectile_list);
 void CreateProjectile(ProjectileList* projectile_list, Player* player, EnemyList* enemy_list);
 

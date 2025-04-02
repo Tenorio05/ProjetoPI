@@ -7,8 +7,8 @@ float angle_enemy = 0.0f;
 void CreatePlayer(Player* player) {
     player->width = 25;
     player->height = 35;
-    player->position.x = 1280/2 - (player->width/2);
-    player->position.y = 600;
+    player->position.x = 1280/2;
+    player->position.y = 600 + (player->height/2);
     player->angle = 0;
 }
 
@@ -28,9 +28,7 @@ void DrawPlayer(Player* player) {
         player->angle = angle_enemy;
     }
 
-    DrawRectanglePro(player_rect, player_center, player->angle, YELLOW);
-    DrawCircle(player->position.x, player->position.y, 4, GREEN);
-    DrawCircle(1280/2 - 25/2, 600, 4, WHITE);
+    DrawRectanglePro(player_rect, player_center, player->angle, RED);
 }
 
 void TurnToEnemy(Player* player, EnemyList* enemy_list) {
