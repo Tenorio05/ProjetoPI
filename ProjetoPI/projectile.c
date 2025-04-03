@@ -17,13 +17,20 @@ void UpdateProjectile(ProjectileList* projectile_list, EnemyList* enemy_list) {
     for (int i = 0; i < projectile_list->qty_projectiles; i++) {
         Projectile projectile = projectile_list->projectiles[i];
         Enemy enemy = projectile.target;
-        dx = projectile.center.x - enemy.position.x;        
-        dy = projectile.center.y - enemy.position.y;
+        Vector2 enemy_center = {enemy.position.x + enemy.width / 2, enemy.position.y + enemy.height / 2};
+        dx = projectile.center.x - enemy_center.x;        
+        dy = projectile.center.y - enemy_center.y;
         distance = sqrt(dx*dx + dy*dy);
 
-        projectile_list->projectiles[i].center.x += (-dx / distance) * projectile.speed;
-        projectile_list->projectiles[i].center.y -= (dy / distance) * projectile.speed;
-        DrawText(TextFormat("%f", projectile_list->projectiles[i].center.x), 0, 0, 40, RED);
+        if (distance <= 50) {
+            for (int j = i; j < projectile_list->qty_projectiles; j++) {
+                projectile_list->projectiles[j] = projectile_list->projectiles[j + 1];
+            }
+            projectile_list->qty_projectiles--;
+        } else {
+            projectile_list->projectiles[i].center.x += (-dx / distance) * projectile.speed;
+            projectile_list->projectiles[i].center.y -= (dy / distance) * projectile.speed;
+        }
     }
 }
 
@@ -44,9 +51,9 @@ void CreateProjectile(ProjectileList* projectile_list, Player* player, EnemyList
 
     Projectile projectile;
     projectile.center = (Vector2) {player->position.x - ((dx / dy) * 30), player->position.y - 30};
-    projectile.radius = 2;
+    projectile.radius = 4;
     projectile.target = enemy;
-    projectile.speed = 5;
+    projectile.speed = 7;
     
     int qty_projectiles = projectile_list->qty_projectiles;
     projectile_list->projectiles[qty_projectiles] = projectile;

@@ -30,12 +30,12 @@ void DrawEnemies(EnemyList* enemy_list, Font myfont) {
         float position_text_y = enemy.position.y + (enemy.height * 0.9);
 
         DrawRectangle(enemy.position.x, enemy.position.y, enemy.width, enemy.height, RED);
-        if (enemy.index_typing == -1) {
+        if (enemy.index_typing == 0) {
             DrawTextEx(myfont, enemy.word, ((Vector2){ position_text_x, position_text_y }), 30, 0, WHITE);
         } else {
             for (int i = 0; i < word_size; i++) {
-                if (i <= enemy.index_typing) {
-                    DrawTextEx(myfont, TextFormat("%c", enemy.word[i]), ((Vector2){ position_text_x + (15*i), position_text_y }), 30, 0, YELLOW);
+                if (i < enemy.index_typing) {
+                    DrawCircle(-1,-1, 0, BLACK);
                 } else {
                     DrawTextEx(myfont, TextFormat("%c", enemy.word[i]), ((Vector2){ position_text_x + (15*i), position_text_y }), 30, 0, RED);
                 }
@@ -53,11 +53,11 @@ void SpawnEnemy(EnemyList* enemy_list) {
         Enemy enemy;
         enemy.width = size_chosen;
         enemy.height = size_chosen;
-        enemy.speed = 1.5;
+        enemy.speed = 0.5;
         enemy.position.x = GetRandomValue(0, 1280);
         enemy.position.y = -100;
         enemy.locked = 0;
-        enemy.index_typing = -1;
+        enemy.index_typing = 0;
         strcpy(enemy.word, shortwords[GetRandomValue(0,99)]);
         int same_initial = 1;
         while (same_initial) {

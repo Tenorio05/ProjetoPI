@@ -26,7 +26,8 @@ void DrawPlayer(Player* player) {
         player->angle = angle_enemy;
     }
 
-    DrawRectanglePro(player_rect, player_center, player->angle, RED);
+    DrawRectanglePro(player_rect, player_center, player->angle, YELLOW);
+    DrawCircle(player->position.x, player->position.y, 2, PURPLE);
 }
 
 void TurnToEnemy(Player* player, EnemyList* enemy_list) {
