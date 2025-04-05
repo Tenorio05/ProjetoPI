@@ -59,6 +59,7 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* proje
 void InitTexts(void);
 void DrawEnemies(EnemyList* enemy_list, Font myfont);
 void SpawnEnemy(EnemyList* enemy_list);
+void UpdateEnemyWaves(EnemyList* enemy_list);
 void MoveEnemies(EnemyList* enemy_list, Player* player);
 void RemoveEnemy(EnemyList* enemy_list, int index_enemy);
 void DelayEnemies(EnemyList* enemy_list);
