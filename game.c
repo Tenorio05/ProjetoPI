@@ -17,7 +17,7 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* proje
         HandleTyping(player, enemy_list, projectile_list, 259);
     }
     
-    SpawnEnemy(enemy_list);
+    UpdateEnemyWaves(enemy_list);
     MoveEnemies(enemy_list, player);
     UpdateProjectile(projectile_list, enemy_list);
     DelayEnemies(enemy_list);
