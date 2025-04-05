@@ -3,6 +3,9 @@
 
 #include "raylib.h"
 
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
+
 typedef struct Player {
     Rectangle rect;
     Color color;

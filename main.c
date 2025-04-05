@@ -4,9 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 720
-
 GameScreen currentScreen = MENU; // Determina em que cenário o jogador está (MENU, GAMEPLAY, QUIT)
 Player player;
 EnemyList enemy_list;

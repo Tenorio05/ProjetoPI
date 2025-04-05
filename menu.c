@@ -2,18 +2,18 @@
 #include "game.h"
 
 void DrawMenu(void) {
-    ClearBackground(RAYWHITE);
-    DrawText("Menu Principal", 400, 200, 40, BLACK);
+    ClearBackground(BLACK);
+    DrawText("Menu Principal", SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 50, RAYWHITE);
 }
 
 void DrawSettings(void) {
-    ClearBackground(BLUE);
-    DrawText("Configurações", 400, 200, 40, BLACK);
+    ClearBackground(BLACK);
+    DrawText("Configurações", SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 50, RAYWHITE);
 }
 
 void DrawCredits(void) {
-    ClearBackground(YELLOW);
-    DrawText("Créditos", 400, 200, 40, BLACK);
+    ClearBackground(BLACK);
+    DrawText("Créditos", SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 50, RAYWHITE);
 }
 
 void UpdateMenu(void) {
