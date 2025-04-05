@@ -53,7 +53,7 @@ void SpawnEnemy(EnemyList* enemy_list) {
         Enemy enemy;
         enemy.color = RED;
         enemy.rect = (Rectangle) {GetRandomValue(0, 1280), -100, size_chosen, size_chosen};
-        enemy.speed = 1.5;
+        enemy.speed = 3.0;
         enemy.locked = 0;
         enemy.index_typing = 0;
         enemy.delay_speed = 0;
@@ -121,11 +121,11 @@ void MoveEnemies(EnemyList* enemy_list, Player* player) {
 void DelayEnemies(EnemyList* enemy_list) {
     for (int i = 0; i < enemy_list->qty_enemies; i++) {
         Enemy enemy = enemy_list->enemies[i];
-        if (enemy.delay_speed >= 0) {
+        if (enemy.delay_speed > 0) {
             enemy_list->enemies[i].speed = 0.5;
             enemy_list->enemies[i].delay_speed -= GetFrameTime();
         } else {
-            enemy_list->enemies[i].speed = 1.0;
+            enemy_list->enemies[i].speed = 3.0;
         }
     }
 }
