@@ -21,12 +21,10 @@ void SetSettings(void) {
     config.rec = (Rectangle) {rec.x - 30, rec.y - 240, rec.width, rec.height};
     sound.rec  = (Rectangle) {rec.x, rec.y -  90, rec.width, rec.height};
     music.rec  = (Rectangle) {rec.x, rec.y +  60, rec.width, rec.height};
-    back.rec   = (Rectangle) {(SCREEN_WIDTH - 33*5)/2, rec.y + 260, 33*5, 50};
 
     strcpy(config.text, "Configurações");  config.text_color = RAYWHITE;
     strcpy(sound.text, "Som");             sound.text_color = RAYWHITE;
     strcpy(music.text, "Música");          music.text_color = RAYWHITE;
-    strcpy(back.text, "Voltar");           back.text_color = RAYWHITE;
 
     sound_line = (Line) {line.x - line.size/2, line.y -  40, line.size, line.color};
     music_line = (Line) {line.x - line.size/2, line.y + 110, line.size, line.color};
@@ -70,7 +68,7 @@ void DrawSettings(void) {
         if (GetMouseX() > sound_line.x + sound_line.size) {
             fprintf(sett_file, "%d\n", 100);
             sound_rec.x = sound_line.x + sound_line.size;
-            DrawRectangle(sound_rec.x + sound_line.size, sound_rec.y, sound_rec.width, sound_rec.height, WHITE);
+            DrawRectangle(sound_rec.x, sound_rec.y, sound_rec.width, sound_rec.height, WHITE);
         } else {
             fprintf(sett_file, "%d\n", (int) (GetMouseX() - sound_line.x)/3);
             sound_rec.x = GetMouseX() - sound_rec.width/2;

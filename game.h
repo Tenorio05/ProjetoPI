@@ -66,9 +66,10 @@ typedef enum StateTyping {NOTLOCKED = 0, LOCKONENEMY = 1} StateTyping;
 extern GameScreen currentScreen;
 extern StateTyping state;
 
-// Menu & Settings
+// Menu & Settings & Credits
 Rectangle rec = {(SCREEN_WIDTH - 400)/2, (SCREEN_HEIGHT - 80)/2, 400, 80};
 int font_size = 50;
+Button back = {{(SCREEN_WIDTH - 33*5)/2, SCREEN_HEIGHT/2 + 220, 33*5, 50}, "Voltar", BLACK, RAYWHITE};
 
 // game.c
 void DrawGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, Font myfont);

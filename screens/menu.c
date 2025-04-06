@@ -3,6 +3,9 @@
 
 Button name, play, sett, cred, quit;
 
+//DrawText("................................................................................................................................", 0, credit.rec.y - 10, 50, RED); // DEBUG
+//DrawText("_____________________________________________________________________________________________", 0, credit.rec.y - 15, 50, RED); // DEBUG
+
 void SetMenu(void) {
     name.rec = (Rectangle) {rec.x - 30, rec.y - 240, rec.width, rec.height};
     play.rec = (Rectangle) {rec.x, rec.y -  40, rec.width, rec.height}; play.rec_color = RAYWHITE;
