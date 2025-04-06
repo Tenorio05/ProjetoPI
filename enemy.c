@@ -5,8 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-int size_enemies[3] = {20, 30, 40};
+int size_enemies[3] = {20, 40, 60};
 char shortwords[200][15]; 
+char mediumwords[100][15];
+char longwords[100][15];
 
 float wave_timer = 0.0f;
 float wave_interval = 10.0f;
@@ -14,11 +16,20 @@ int enemies_per_wave = 5;
 int enemies_spawned_this_wave = 0;
 
 void InitTexts(void) {
-    FILE *file = fopen("shortwords.txt", "r");
-    for (int i = 0; i < 100; i++) {
-        fscanf(file, "%s\n", shortwords[i]);
+    FILE *fileshort = fopen("shortwords.txt", "r");
+    FILE *filemedium = fopen("mediumwords.txt", "r");
+    FILE *filelong = fopen("longwords.txt", "r");
+
+    for (int i = 0; i < 200; i++) {
+        fscanf(fileshort, "%s\n", shortwords[i]);
+        if (i < 100) {
+            fscanf(filemedium, "%s\n", mediumwords[i]);
+            fscanf(filelong, "%s\n", longwords[i]);
+        }
     }
-    fclose(file);
+    fclose(fileshort);
+    fclose(filemedium);
+    fclose(filelong);
 }
 
 void DrawEnemies(EnemyList* enemy_list, Font myfont) {
@@ -53,11 +64,18 @@ void SpawnEnemy(EnemyList* enemy_list) {
     Enemy enemy;
     enemy.color = RED;
     enemy.rect = (Rectangle) {GetRandomValue(0, 1280), -100, size_chosen, size_chosen};
-    enemy.speed = 3.0;
+    enemy.speed = 2.0;
     enemy.locked = 0;
     enemy.index_typing = 0;
     enemy.delay_speed = 0;
-    strcpy(enemy.word, shortwords[GetRandomValue(0,99)]);
+    
+    if (size_chosen == size_enemies[0]) {
+        strcpy(enemy.word, shortwords[GetRandomValue(0,199)]);
+    } else if (size_chosen == size_enemies[1]) {
+        strcpy(enemy.word, mediumwords[GetRandomValue(0,99)]);
+    } else if (size_chosen == size_enemies[2]) {
+        strcpy(enemy.word, longwords[GetRandomValue(0,99)]);
+    }
 
     int same_initial = 1;
     while (same_initial) {
@@ -65,23 +83,22 @@ void SpawnEnemy(EnemyList* enemy_list) {
         for (int i = 0; i < enemy_list->qty_enemies; i++) {
             if (enemy_list->enemies[i].word[0] == enemy.word[0]) {
                 same_initial = 1;
-                strcpy(enemy.word, shortwords[GetRandomValue(0,199)]);
+                if (size_chosen == size_enemies[0]) {
+                    strcpy(enemy.word, shortwords[GetRandomValue(0,199)]);
+                } else if (size_chosen == size_enemies[1]) {
+                    strcpy(enemy.word, mediumwords[GetRandomValue(0,99)]);
+                } else if (size_chosen == size_enemies[2]) {
+                    strcpy(enemy.word, longwords[GetRandomValue(0,99)]);
+                }
                 break;
             }
         }
     }
 
     enemy.health = strlen(enemy.word);
-
-    for (int i = 0; i < 20; i++) {
-        if (enemy_list->enemies[i].health == -1) {
-            enemy_list->enemies[i] = enemy;
-            break;
-        }
-    }
+    enemy_list->enemies[enemy_list->qty_enemies] = enemy;
     enemy_list->qty_enemies++;
 }
-
 void UpdateEnemyWaves(EnemyList* enemy_list) {
     wave_timer += GetFrameTime();
 
@@ -96,10 +113,9 @@ void UpdateEnemyWaves(EnemyList* enemy_list) {
 }
 
 void RemoveEnemy(EnemyList* enemy_list, int index_enemy) {
-    for (int i = index_enemy; i < enemy_list->qty_enemies - 1; i++) {
+    for (int i = index_enemy; i < enemy_list->qty_enemies; i++) {
         enemy_list->enemies[i] = enemy_list->enemies[i + 1];
     }
-    enemy_list->enemies[enemy_list->qty_enemies - 1].health = -1;
     enemy_list->qty_enemies--;
 } 
 
@@ -111,10 +127,9 @@ void MoveEnemies(EnemyList* enemy_list, Player* player) {
         float dy = player->rect.y - enemy_center.y;
         float distance = sqrt(dx*dx + dy*dy);
 
-        if (enemy.health <= 0) {
+        if (enemy.health == 0) {
             RemoveEnemy(enemy_list, i);
             i--;
-            continue;
         }
 
         if (!CheckCollisionRecs(player->rect, enemy.rect)) {
@@ -137,7 +152,7 @@ void DelayEnemies(EnemyList* enemy_list) {
             enemy_list->enemies[i].speed = 0.5;
             enemy_list->enemies[i].delay_speed -= GetFrameTime();
         } else {
-            enemy_list->enemies[i].speed = 3.0;
+            enemy_list->enemies[i].speed = 2.0;
         }
     }
 }

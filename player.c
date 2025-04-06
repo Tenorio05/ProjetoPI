@@ -3,11 +3,13 @@
 #include <math.h>
 
 float angle_enemy = 0.0f;
+Texture2D nave;
 
 void CreatePlayer(Player* player) {
-    player->rect = (Rectangle) {1280/2, 600 + (35/2), 25, 35};
+    player->rect = (Rectangle) {1280/2, 600 + (42/2), 39, 42};
     player->angle = 0;
     player->color = YELLOW;
+    nave = LoadTexture("nave.png");
 }
 
 void DrawPlayer(Player* player) {
@@ -23,8 +25,9 @@ void DrawPlayer(Player* player) {
         player->angle = angle_enemy;
     }
     
-    DrawRectanglePro(player->rect, player_center, player->angle, player->color);
-    DrawCircle(player->rect.x, player->rect.y, 3, GREEN);
+    // DrawRectanglePro(player->rect, player_center, player->angle, player->color);
+    DrawTexturePro(nave, (Rectangle) {0, 0, 39, 42}, player->rect, player_center, player->angle, WHITE);
+    // DrawCircle(player->rect.x, player->rect.y, 3, GREEN);
 }
 
 void TurnToEnemy(Player* player, EnemyList* enemy_list) {

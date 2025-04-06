@@ -11,6 +11,7 @@ Font myfont;
 ProjectileList projectile_list = {.qty_projectiles = 0};
 
 int quitting = 0;
+int j = 0;
 
 void UpdateDrawFrame(void); // Responsável por desenhar na tela o player, inimigos, menu...
 void UpdateGame(void); // Atualiza a movimentação dos inimigos, player, etc.
@@ -23,15 +24,16 @@ int main(void)
     InitTexts();
     myfont = LoadFont("COUR.TTF");
 
-    for (int i = 0; i < 20; i++) {
-        enemy_list.enemies[i] = (Enemy) {(Rectangle) {0,0,0,0}, (Color) WHITE, -1, "Nada", -1, -1, -1};
-    }
-    enemy_list.qty_enemies = 0;
-
     while (!WindowShouldClose() && quitting == 0)
     {
         UpdateGame();
         UpdateDrawFrame();
+        DrawText(TextFormat("%d", j), 500,0,40,WHITE);
+        for (int i = 0; i < 20; i++) {
+            DrawText(TextFormat("W: %s", enemy_list.enemies[i].word), 0, 25 * i, 20, WHITE);
+        }
+        j++;
+
     }
     
     UnloadFont(myfont);
