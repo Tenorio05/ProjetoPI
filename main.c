@@ -42,7 +42,7 @@ int main(void)
 
 void UpdateGame() {
     switch (currentScreen) {
-        case MENU: 
+        case MENU:            
             UpdateMenu(); // Lida com a lógica do MENU (Funcionamento dos botões)
             break;
         case GAMEPLAY: 

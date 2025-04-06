@@ -7,5 +7,15 @@
 		"**/.DS_Store": true,
 		"**/*.o": true,
 		"**/*.exe": true,
+	},
+	"files.associations": {
+		"array": "c",
+		"*.tcc": "c",
+		"memory": "c",
+		"format": "c",
+		"functional": "c",
+		"tuple": "c",
+		"utility": "c",
+		"variant": "c"
 	}
 }

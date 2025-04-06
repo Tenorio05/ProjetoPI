@@ -40,6 +40,18 @@ typedef struct EnemyList {
     int qty_enemies;
 } EnemyList;
 
+typedef struct Button {
+    Rectangle rec;
+    char text[20];
+    Color rec_color, text_color;
+} Button;
+
+typedef struct Line {
+    float x, y;
+    float size;
+    Color color;
+} Line;
+
 typedef enum GameScreen {
     MENU = 0,
     GAMEPLAY = 1,
