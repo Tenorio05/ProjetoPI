@@ -40,6 +40,7 @@ typedef struct EnemyList {
     int qty_enemies;
 } EnemyList;
 
+// Menu & Settings
 typedef struct Button {
     Rectangle rec;
     char text[20];
@@ -65,6 +66,9 @@ typedef enum StateTyping {NOTLOCKED = 0, LOCKONENEMY = 1} StateTyping;
 extern GameScreen currentScreen;
 extern StateTyping state;
 
+// Menu & Settings
+Rectangle rec = {(SCREEN_WIDTH - 400)/2, (SCREEN_HEIGHT - 80)/2, 400, 80};
+int font_size = 50;
 
 // game.c
 void DrawGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, Font myfont);
@@ -80,11 +84,18 @@ void RemoveEnemy(EnemyList* enemy_list, int index_enemy);
 void DelayEnemies(EnemyList* enemy_list);
 
 // menu.c
+void SetMenu(void);
 void DrawMenu(void);
-void DrawSettings(void);
-void DrawCredits(void);
 void UpdateMenu(void);
+
+//settings.c
+void SetSettings(void);
+void DrawSettings(void);
 void UpdateSettings(void);
+
+//credits.c
+void SetCredits(void);
+void DrawCredits(void);
 void UpdateCredits(void);
 
 // player.c
@@ -103,7 +114,9 @@ void CreateProjectile(ProjectileList* projectile_list, Player* player, EnemyList
 
 #include "game.c"
 #include "enemy.c"
-#include "menu.c"
+#include "screens/menu.c"
+#include "screens/settings.c"
+#include "screens/credits.c"
 #include "player.c"
 #include "typing.c"
 #include "projectile.c"
