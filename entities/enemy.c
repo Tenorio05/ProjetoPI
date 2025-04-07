@@ -113,6 +113,7 @@ void UpdateEnemyWaves(EnemyList* enemy_list) {
 }
 
 void RemoveEnemy(EnemyList* enemy_list, int index_enemy) {
+    PlaySound(morteSound); // Toca o som de morte quando inimigo morre
     for (int i = index_enemy; i < enemy_list->qty_enemies; i++) {
         enemy_list->enemies[i] = enemy_list->enemies[i + 1];
     }

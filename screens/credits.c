@@ -21,5 +21,8 @@ void DrawCredits(void) {
 }
 
 void UpdateCredits(void) {
-    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), back.rec)) currentScreen = MENU;
+    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), back.rec)) {
+        PlaySound(botaoSound); // Toca o som de botão
+        currentScreen = MENU;
+    }
 }

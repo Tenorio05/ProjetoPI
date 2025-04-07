@@ -30,6 +30,11 @@ void SetSettings(void) {
     music_line = (Line) {line.x - line.size/2, line.y + 110, line.size, line.color};
     sound_rec = (Rectangle) {line.x - 5 + (sound_vol - 50)*3, line.y -  40 - 10, 10, 20};
     music_rec = (Rectangle) {line.x - 5 + (music_vol - 50)*3, line.y + 110 - 10, 10, 20};
+
+    SetSoundVolume(botaoSound, sound_vol/10);
+    SetSoundVolume(morteSound, sound_vol/10);
+    SetSoundVolume(tiroSound, sound_vol/10);
+    SetSoundVolume(menuJogoSound, music_vol/10);
 }
 
 void DrawSettings(void) {
@@ -107,5 +112,8 @@ void DrawSettings(void) {
 }
 
 void UpdateSettings(void) {
-    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), back.rec)) currentScreen = MENU;
+    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), back.rec)) {
+        PlaySound(botaoSound); // Toca o som de botão
+        currentScreen = MENU;
+    }
 }

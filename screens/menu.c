@@ -54,8 +54,20 @@ void DrawMenu(void) {
 }
 
 void UpdateMenu(void) {
-    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), play.rec)) currentScreen = GAMEPLAY;
-    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), sett.rec)) currentScreen = SETTINGS;
-    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), cred.rec)) currentScreen = CREDITS;
-    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), quit.rec)) currentScreen = QUIT;
+    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), play.rec)) {
+        PlaySound(botaoSound); // Toca o som de botão
+        currentScreen = GAMEPLAY;
+    }
+    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), sett.rec)) {
+        PlaySound(botaoSound); // Toca o som de botão
+        currentScreen = SETTINGS;
+    }
+    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), cred.rec)) {
+        PlaySound(botaoSound); // Toca o som de botão
+        currentScreen = CREDITS;
+    }
+    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), quit.rec)) {
+        PlaySound(botaoSound); // Toca o som de botão
+        currentScreen = QUIT;
+    }
 }

@@ -69,6 +69,8 @@ extern StateTyping state;
 extern Sound botaoSound;
 extern Sound morteSound;
 extern Sound tiroSound;
+extern Sound menuJogoSound;
+
 // Menu & Settings & Credits
 Rectangle rec = {(SCREEN_WIDTH - 400)/2, (SCREEN_HEIGHT - 80)/2, 400, 80};
 int font_size = 50;

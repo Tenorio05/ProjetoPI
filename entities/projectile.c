@@ -63,4 +63,5 @@ void CreateProjectile(ProjectileList* projectile_list, Player* player, EnemyList
     int qty_projectiles = projectile_list->qty_projectiles;
     projectile_list->projectiles[qty_projectiles] = projectile;
     projectile_list->qty_projectiles++;
+    PlaySound(tiroSound); // Toca o som de tiro
 }
