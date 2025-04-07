@@ -13,16 +13,30 @@ ProjectileList projectile_list = {.qty_projectiles = 0};
 int quitting = 0;
 int j = 0;
 
+// Declaração dos sons como variáveis globais para que sejam usadas nos outros módulos
+Sound morteSound;
+Sound menuJogoSound;
+Sound tiroSound;
+Sound botaoSound;
+
 void UpdateDrawFrame(void); // Responsável por desenhar na tela o player, inimigos, menu...
 void UpdateGame(void); // Atualiza a movimentação dos inimigos, player, etc.
 
 int main(void)
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Projeto FPI");
+    InitAudioDevice(); // Inicializa o sistema de áudio do Raylib
     SetTargetFPS(60);
     CreatePlayer(&player);
     InitTexts();
     myfont = LoadFont("COUR.TTF");
+
+    // Carrega os arquivos de som
+    // Aqui, tem que ter baixado os arquivos mp3, dai vou deixar um link de um drive com todos os arquivos
+    morteSound = LoadSound("sounds/morte.mp3");
+    menuJogoSound = LoadSound("sounds/menu_jogo.mp3");
+    tiroSound = LoadSound("sounds/tiro.mp3");
+    botaoSound = LoadSound("sounds/botao.mp3");
 
     while (!WindowShouldClose() && quitting == 0)
     {
@@ -35,7 +49,12 @@ int main(void)
         j++;
 
     }
-    
+    // Libera os recursos de áudio
+    UnloadSound(morteSound);
+    UnloadSound(menuJogoSound);
+    UnloadSound(tiroSound);
+    UnloadSound(botaoSound);
+    CloseAudioDevice(); // Fecha o sistema de áudio
     UnloadFont(myfont);
     CloseWindow();
 
@@ -43,6 +62,12 @@ int main(void)
 }
 
 void UpdateGame() {
+    
+    // Toca a música de fundo sem parar
+    if (!IsSoundPlaying(menuJogoSound)) {
+        PlaySound(menuJogoSound);
+    }
+
     switch (currentScreen) {
         case MENU:            
             UpdateMenu(); // Lida com a lógica do MENU (Funcionamento dos botões)
