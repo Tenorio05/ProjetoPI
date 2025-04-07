@@ -9,7 +9,7 @@ void CreatePlayer(Player* player) {
     player->rect = (Rectangle) {1280/2, 600 + (42/2), 39, 42};
     player->angle = 0;
     player->color = YELLOW;
-    nave = LoadTexture("nave.png");
+    nave = LoadTexture("sprites/nave.png");
 }
 
 void DrawPlayer(Player* player) {

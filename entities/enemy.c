@@ -16,9 +16,9 @@ int enemies_per_wave = 5;
 int enemies_spawned_this_wave = 0;
 
 void InitTexts(void) {
-    FILE *fileshort = fopen("shortwords.txt", "r");
-    FILE *filemedium = fopen("mediumwords.txt", "r");
-    FILE *filelong = fopen("longwords.txt", "r");
+    FILE *fileshort = fopen("txt_files/shortwords.txt", "r");
+    FILE *filemedium = fopen("txt_files/mediumwords.txt", "r");
+    FILE *filelong = fopen("txt_files/longwords.txt", "r");
 
     for (int i = 0; i < 200; i++) {
         fscanf(fileshort, "%s\n", shortwords[i]);

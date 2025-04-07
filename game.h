@@ -113,12 +113,12 @@ void DrawProjectiles(ProjectileList* projectile_list);
 void CreateProjectile(ProjectileList* projectile_list, Player* player, EnemyList* enemy_list, int index_enemy);
 
 
-#include "game.c"
-#include "enemy.c"
+#include "screens/game.c"
+#include "entities/enemy.c"
 #include "screens/menu.c"
 #include "screens/settings.c"
 #include "screens/credits.c"
-#include "player.c"
+#include "entities/player.c"
 #include "typing.c"
-#include "projectile.c"
+#include "entities/projectile.c"
 #endif

@@ -13,7 +13,7 @@ FILE *sett_file;
 int sound_vol, music_vol;
 
 void SetSettings(void) {
-    sett_file = fopen("settings.txt", "r");
+    sett_file = fopen("txt_files/settings.txt", "r");
     fscanf(sett_file, "%d", &sound_vol);
     fscanf(sett_file, "%d", &music_vol);
     fclose(sett_file);
@@ -55,7 +55,7 @@ void DrawSettings(void) {
     if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) soundPressed = 0;
 
     if (soundPressed && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-        sett_file = fopen("settings.txt", "w");
+        sett_file = fopen("txt_files/settings.txt", "w");
 
         DrawRectangle(sound_rec.x, sound_rec.y, sound_rec.width, sound_rec.height, BLACK);
         DrawLine(sound_line.x, sound_line.y, sound_line.x + sound_line.size, sound_line.y, sound_line.color);
@@ -82,7 +82,7 @@ void DrawSettings(void) {
     if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) musicPressed = 0;
 
     if (musicPressed && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-        sett_file = fopen("settings.txt", "w");
+        sett_file = fopen("txt_files/settings.txt", "w");
         fprintf(sett_file, "%d\n", sound_vol);
 
         DrawRectangle(music_rec.x, music_rec.y, music_rec.width, music_rec.height, BLACK);
