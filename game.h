@@ -10,6 +10,7 @@ typedef struct Player {
     Rectangle rect;
     Color color;
     float angle;
+    int state;
 } Player;
 
 typedef struct Enemy {
@@ -53,6 +54,11 @@ typedef struct Line {
     Color color;
 } Line;
 
+typedef struct Background {
+    Texture2D texture;
+    float scroll_y;
+} Background;
+
 typedef enum GameScreen {
     MENU = 0,
     GAMEPLAY = 1,
@@ -64,7 +70,6 @@ typedef enum GameScreen {
 typedef enum StateTyping {NOTLOCKED = 0, LOCKONENEMY = 1} StateTyping;
 
 extern GameScreen currentScreen;
-extern StateTyping state;
 
 // Menu & Settings & Credits
 Rectangle rec = {(SCREEN_WIDTH - 400)/2, (SCREEN_HEIGHT - 80)/2, 400, 80};
@@ -112,6 +117,11 @@ void UpdateProjectile(ProjectileList* projectile_list, EnemyList* enemy_list);
 void DrawProjectiles(ProjectileList* projectile_list);
 void CreateProjectile(ProjectileList* projectile_list, Player* player, EnemyList* enemy_list, int index_enemy);
 
+// background.c
+void InitBackground(void);
+void DrawBackground(void);
+void UpdateBackground(void);
+
 
 #include "screens/game.c"
 #include "entities/enemy.c"
@@ -121,4 +131,5 @@ void CreateProjectile(ProjectileList* projectile_list, Player* player, EnemyList
 #include "entities/player.c"
 #include "typing.c"
 #include "entities/projectile.c"
+#include "entities/background.c"
 #endif

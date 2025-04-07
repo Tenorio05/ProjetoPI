@@ -18,22 +18,20 @@ void UpdateGame(void); // Atualiza a movimentação dos inimigos, player, etc.
 
 int main(void)
 {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Projeto FPI");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Projeto PI");
     SetTargetFPS(60);
     CreatePlayer(&player);
     InitTexts();
+    InitBackground();
+    
     myfont = LoadFont("COUR.TTF");
 
     while (!WindowShouldClose() && quitting == 0)
     {
         UpdateGame();
         UpdateDrawFrame();
-        DrawText(TextFormat("%d", j), 500,0,40,WHITE);
-        for (int i = 0; i < 20; i++) {
-            DrawText(TextFormat("W: %s", enemy_list.enemies[i].word), 0, 25 * i, 20, WHITE);
-        }
+        DrawText(TextFormat("%d", j), 0, 0, 30, WHITE);
         j++;
-
     }
     
     UnloadFont(myfont);
