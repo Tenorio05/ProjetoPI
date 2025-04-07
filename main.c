@@ -24,13 +24,13 @@ void UpdateGame(void); // Atualiza a movimentação dos inimigos, player, etc.
 
 int main(void)
 {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Projeto FPI");
-    InitAudioDevice(); // Inicializa o sistema de áudio do Raylib
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Projeto PI");
     SetTargetFPS(60);
     CreatePlayer(&player);
     InitTexts();
+    InitBackground();
+    
     myfont = LoadFont("COUR.TTF");
-
     // Carrega os arquivos de som
     // Aqui, tem que ter baixado os arquivos mp3, dai vou deixar um link de um drive com todos os arquivos
     morteSound = LoadSound("sounds/morte.mp3");
@@ -42,19 +42,15 @@ int main(void)
     {
         UpdateGame();
         UpdateDrawFrame();
-        DrawText(TextFormat("%d", j), 500,0,40,WHITE);
-        for (int i = 0; i < 20; i++) {
-            DrawText(TextFormat("W: %s", enemy_list.enemies[i].word), 0, 25 * i, 20, WHITE);
-        }
-        j++;
-
-    }
+    }    
+    
     // Libera os recursos de áudio
     UnloadSound(morteSound);
     UnloadSound(menuJogoSound);
     UnloadSound(tiroSound);
     UnloadSound(botaoSound);
     CloseAudioDevice(); // Fecha o sistema de áudio
+    
     UnloadFont(myfont);
     CloseWindow();
 
@@ -62,7 +58,7 @@ int main(void)
 }
 
 void UpdateGame() {
-    
+
     // Toca a música de fundo sem parar
     if (!IsSoundPlaying(menuJogoSound)) {
         PlaySound(menuJogoSound);
