@@ -46,19 +46,14 @@ int main(void)
     {
         UpdateGame();
         UpdateDrawFrame();
-        
-
     }
     // Libera os recursos de áudio
     UnloadSound(morteSound);
     UnloadSound(menuJogoSound);
     UnloadSound(tiroSound);
     UnloadSound(botaoSound);
+    CloseAudioDevice();
 
-    //pa liberar os recursos de textura
-
-
-    CloseAudioDevice(); // Fecha o sistema de áudio
     UnloadFont(myfont);
     CloseWindow();
 
@@ -73,26 +68,13 @@ void UpdateGame() {
     }
 
     switch (currentScreen) {
-        case MENU:            
-            UpdateMenu(); // Lida com a lógica do MENU (Funcionamento dos botões)
-            break;
-        case GAMEPLAY:
-            if (player.lives <= 0) {
-                ResetGame(&player, &enemy_list, &projectile_list);
-            } 
-            UpdateGameplay(&player, &enemy_list, &projectile_list, &time_pass, &freeze, &power_up_list); // Lida com a lógica do player e inimigos
-            break;
-        case GAME_OVER:
-            UpdateGameOver();
-            break;        
-        case SETTINGS: 
-            UpdateSettings(); 
-            break;
-        case CREDITS: 
-            UpdateCredits(); 
-            break;
-        case QUIT: 
-            break;
+                case MENU: UpdateMenu(); break;
+        case GAMEPLAY: UpdateGameplay(&player, &enemy_list, &projectile_list, &time_pass, &freeze, &power_up_list); break;
+        case GAME_OVER: ResetGame(&player, &enemy_list, &projectile_list); UpdateGameOver(); break;
+        case PAUSE: UpdatePause(&player, &enemy_list, &projectile_list); break;
+        case SETTINGS: UpdateSettings(); break;
+        case CREDITS: UpdateCredits(); break;
+        case QUIT: break;
     }
 }
 
@@ -100,24 +82,13 @@ void UpdateDrawFrame(void) {
     BeginDrawing();
 
     switch (currentScreen) {
-        case MENU: 
-            DrawMenu(); // Printa na tela o menu 
-            break;
-        case GAMEPLAY: 
-            DrawGame(&player, &enemy_list, &projectile_list, myfont, power_up_list); // Desenha na tela o player e inimigos
-            break;
-        case GAME_OVER:
-            DrawGameOver();
-            break;        
-        case SETTINGS: 
-            DrawSettings(); 
-            break;
-        case CREDITS: 
-            DrawCredits(); 
-            break;
-        case QUIT: 
-            quitting = 1; 
-            break;
+        case MENU: DrawMenu(); break;
+        case GAMEPLAY: DrawGame(&player, &enemy_list, &projectile_list, myfont, power_up_list); break;
+        case GAME_OVER: DrawGameOver(); break;
+        case PAUSE: DrawPause(); break;
+        case SETTINGS: DrawSettings(); break;
+        case CREDITS: DrawCredits(); break;
+        case QUIT: quitting = 1; break;
     }
     
     EndDrawing();

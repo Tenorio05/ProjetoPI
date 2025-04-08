@@ -64,21 +64,20 @@ typedef enum GameScreen {
     SETTINGS = 2,
     CREDITS = 3,
     QUIT = 4,
-    GAME_OVER = 5  // Nova tela de Game Over
+    GAME_OVER = 5,  // Nova tela de Game Over
+    PAUSE = 6
 } GameScreen;
 
-typedef struct Power_up
-{
+typedef struct Power_up {
     Rectangle rec;
     int type; // define qual o power_up
-}Power_up;
+} Power_up;
 
-typedef struct Power_up_list
-{
+typedef struct Power_up_list {
     Power_up power_up[10];
     int number_power_ups;
     int max_power_up;
-}Power_up_list;
+} Power_up_list;
 
 typedef enum StateTyping {NOTLOCKED = 0, LOCKONENEMY = 1} StateTyping;
 
@@ -102,34 +101,39 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* proje
 // enemy.c
 void InitTexts(void);
 void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]);
-
 void SpawnEnemy(EnemyList* enemy_list);
 void UpdateEnemyWaves(EnemyList* enemy_list);
 void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* time_pass, Power_up_list* power_up_list);
 void RemoveEnemy(EnemyList* enemy_list, int index_enemy);
 void DelayEnemies(EnemyList* enemy_list);
+bool IsPositionFree(EnemyList* enemy_list, Rectangle new_enemy_rect);
 
 // menu.c
 void SetMenu(void);
 void DrawMenu(void);
 void UpdateMenu(void);
 
-//settings.c
+// settings.c
 void SetSettings(void);
 void DrawSettings(void);
 void UpdateSettings(void);
 
-//credits.c
+// credits.c
 void SetCredits(void);
 void DrawCredits(void);
 void UpdateCredits(void);
+
+//pause.c
+void SetPause(void);
+void DrawPause(void);
+void UpdatePause(Player *player, EnemyList *enemy_list, ProjectileList *projectile_list);
 
 // player.c
 void CreatePlayer(Player* player);
 void DrawPlayer(Player* player);
 void TurnToEnemy(Player* player, EnemyList* enemy_list);
 
-// typing.h
+// typing.c
 void HandleTyping(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, int key_pressed);
 
 // projectile.c
@@ -161,6 +165,7 @@ void ResetGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile
 #include "screens/menu.c"
 #include "screens/settings.c"
 #include "screens/credits.c"
+#include "screens/pause.c"
 #include "entities/player.c"
 #include "typing.c"
 #include "entities/projectile.c"
