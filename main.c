@@ -77,12 +77,10 @@ void UpdateGame() {
             UpdateMenu(); // Lida com a lógica do MENU (Funcionamento dos botões)
             break;
         case GAMEPLAY:
-            if (player.lives <= 0) {
-                ResetGame(&player, &enemy_list, &projectile_list);
-            } 
             UpdateGameplay(&player, &enemy_list, &projectile_list, &time_pass, &freeze, &power_up_list); // Lida com a lógica do player e inimigos
             break;
         case GAME_OVER:
+            ResetGame(&player, &enemy_list, &projectile_list);
             UpdateGameOver();
             break;        
         case SETTINGS: 

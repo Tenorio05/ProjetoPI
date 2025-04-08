@@ -67,18 +67,16 @@ typedef enum GameScreen {
     GAME_OVER = 5  // Nova tela de Game Over
 } GameScreen;
 
-typedef struct Power_up
-{
+typedef struct Power_up {
     Rectangle rec;
     int type; // define qual o power_up
-}Power_up;
+} Power_up;
 
-typedef struct Power_up_list
-{
+typedef struct Power_up_list {
     Power_up power_up[10];
     int number_power_ups;
     int max_power_up;
-}Power_up_list;
+} Power_up_list;
 
 typedef enum StateTyping {NOTLOCKED = 0, LOCKONENEMY = 1} StateTyping;
 
@@ -102,24 +100,24 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* proje
 // enemy.c
 void InitTexts(void);
 void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]);
-
 void SpawnEnemy(EnemyList* enemy_list);
 void UpdateEnemyWaves(EnemyList* enemy_list);
 void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* time_pass, Power_up_list* power_up_list);
 void RemoveEnemy(EnemyList* enemy_list, int index_enemy);
 void DelayEnemies(EnemyList* enemy_list);
+bool IsPositionFree(EnemyList* enemy_list, Rectangle new_enemy_rect);
 
 // menu.c
 void SetMenu(void);
 void DrawMenu(void);
 void UpdateMenu(void);
 
-//settings.c
+// settings.c
 void SetSettings(void);
 void DrawSettings(void);
 void UpdateSettings(void);
 
-//credits.c
+// credits.c
 void SetCredits(void);
 void DrawCredits(void);
 void UpdateCredits(void);
