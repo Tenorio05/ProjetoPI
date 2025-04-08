@@ -60,16 +60,17 @@ typedef struct Line {
 
 typedef enum GameScreen {
     MENU = 0,
-    GAMEPLAY = 1,
-    SETTINGS = 2,
-    CREDITS = 3,
-    QUIT = 4,
-    GAME_OVER = 5,  // Nova tela de Game Over
-    PAUSE = 6
+    HISTORY = 1,
+    GAMEPLAY = 2,
+    SETTINGS = 3,
+    CREDITS = 4,
+    QUIT = 5,
+    GAME_OVER = 6  // Nova tela de Game Over
 } GameScreen;
 
 typedef struct Power_up {
     Rectangle rec;
+    Texture2D texture;
     int type; // define qual o power_up
 } Power_up;
 
@@ -123,17 +124,16 @@ void SetCredits(void);
 void DrawCredits(void);
 void UpdateCredits(void);
 
-//pause.c
-void SetPause(void);
-void DrawPause(void);
-void UpdatePause(Player *player, EnemyList *enemy_list, ProjectileList *projectile_list);
+// history.c
+void DrawHistory(Texture2D background, Font myfont);
+void UpdateHistory(void);
 
 // player.c
 void CreatePlayer(Player* player);
 void DrawPlayer(Player* player);
 void TurnToEnemy(Player* player, EnemyList* enemy_list);
 
-// typing.c
+// typing.h
 void HandleTyping(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, int key_pressed);
 
 // projectile.c
@@ -160,15 +160,15 @@ void UpdateGameOver(void);
 void ResetGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list);
 
 
-#include "screens/menu.c"
 #include "screens/game.c"
+#include "entities/enemy.c"
+#include "screens/menu.c"
 #include "screens/settings.c"
 #include "screens/credits.c"
-#include "screens/pause.c"
-#include "entities/enemy.c"
+#include "screens/history.c"
 #include "entities/player.c"
+#include "typing.c"
 #include "entities/projectile.c"
-#include "mecanics/typing.c"
-#include "mecanics/power_up.c"
-#include "mecanics/lives.c"
+#include "entities/power_up.c"
+#include "lives.c"
 #endif

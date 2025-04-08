@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "game.h"
 
-Button play, sett, cred, quit;
+Button name, play, sett, cred, quit;
 
 //DrawText("................................................................................................................................", 0, credit.rec.y - 10, 50, RED); // DEBUG
 //DrawText("_____________________________________________________________________________________________", 0, credit.rec.y - 15, 50, RED); // DEBUG
@@ -60,7 +60,7 @@ void DrawMenu(void) {
 void UpdateMenu(void) {
     if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), play.rec)) {
         PlaySound(botaoSound); // Toca o som de botão
-        currentScreen = GAMEPLAY;
+        currentScreen = HISTORY;
     }
     if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), sett.rec)) {
         PlaySound(botaoSound); // Toca o som de botão

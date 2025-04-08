@@ -34,11 +34,8 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* proje
     } else if (IsKeyPressed(KEY_BACKSPACE)) {
         HandleTyping(player, enemy_list, projectile_list, 259);
     }
-    if (IsKeyPressed(KEY_ZERO)) {
-        currentScreen = PAUSE;
-    }
     
-    
+
     UpdateInvincibility(player);
     UpdateEnemyWaves(enemy_list);
     MoveEnemies(enemy_list, player, freeze, time_pass, power_up_list);
