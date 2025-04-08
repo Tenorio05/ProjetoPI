@@ -160,15 +160,15 @@ void UpdateGameOver(void);
 void ResetGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list);
 
 
-#include "screens/game.c"
-#include "entities/enemy.c"
 #include "screens/menu.c"
+#include "screens/game.c"
 #include "screens/settings.c"
 #include "screens/credits.c"
 #include "screens/pause.c"
+#include "entities/enemy.c"
 #include "entities/player.c"
-#include "typing.c"
 #include "entities/projectile.c"
-#include "entities/power_up.c"
-#include "lives.c"
+#include "mecanics/typing.c"
+#include "mecanics/power_up.c"
+#include "mecanics/lives.c"
 #endif
