@@ -64,6 +64,19 @@ typedef enum GameScreen {
     QUIT = 4
 } GameScreen;
 
+typedef struct Power_up
+{
+    Rectangle rec;
+    int type; // define qual o power_up
+}Power_up;
+
+typedef struct Power_up_list
+{
+    Power_up power_up[10];
+    int number_power_ups;
+    int max_power_up;
+}Power_up_list;
+
 typedef enum StateTyping {NOTLOCKED = 0, LOCKONENEMY = 1} StateTyping;
 
 extern GameScreen currentScreen;
@@ -80,18 +93,18 @@ int font_size = 50;
 Button back = {{(SCREEN_WIDTH - 33*5)/2, SCREEN_HEIGHT/2 + 220, 33*5, 50}, "Voltar", BLACK, RAYWHITE};
 
 // game.c
-void DrawGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, Font myfont);
-void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list);
+void DrawGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, Font myfont, Power_up_list power_up_list);
+void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, double* time_pass, int *freeze, Power_up_list* Power_up_list);
 
 // enemy.c
 void InitTexts(void);
 void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]);
+
 void SpawnEnemy(EnemyList* enemy_list);
 void UpdateEnemyWaves(EnemyList* enemy_list);
-void MoveEnemies(EnemyList* enemy_list, Player* player);
+void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* time_pass, Power_up_list* power_up_list);
 void RemoveEnemy(EnemyList* enemy_list, int index_enemy);
 void DelayEnemies(EnemyList* enemy_list);
-bool IsPositionFree(EnemyList* enemy_list, Rectangle new_enemy_rect);
 
 // menu.c
 void SetMenu(void);
@@ -121,6 +134,14 @@ void UpdateProjectile(ProjectileList* projectile_list, EnemyList* enemy_list);
 void DrawProjectiles(ProjectileList* projectile_list);
 void CreateProjectile(ProjectileList* projectile_list, Player* player, EnemyList* enemy_list, int index_enemy);
 
+// power_up.c
+void Power_up_time(EnemyList* enemyList, double time_pass, float normal_speed, int* freeze); // função para congelar o tempo
+void Power_up_delet(EnemyList* enemyList, int number_enemies); // função que deleta X os inimigos
+void Adicionar_power_up(int type, Power_up_list* power_up_list); // adiciona o power up a lista
+void print_power_up_bar(Power_up_list power_up_list); // printa a barra com os power ups
+void activate_power_up(Power_up_list* power_up_list, EnemyList* enemyList, double *time_pass, int* freeze); // ativa o power up da barra
+void Inicializar_power_up_list(Power_up_list* lista); // inicializa a lista de power ups zerada
+
 
 #include "screens/game.c"
 #include "entities/enemy.c"
@@ -130,5 +151,5 @@ void CreateProjectile(ProjectileList* projectile_list, Player* player, EnemyList
 #include "entities/player.c"
 #include "typing.c"
 #include "entities/projectile.c"
+#include "power_up.c"
 #endif
-
