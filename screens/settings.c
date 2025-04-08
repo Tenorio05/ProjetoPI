@@ -39,7 +39,14 @@ void SetSettings(void) {
 
 void DrawSettings(void) {
     SetSettings();
-    ClearBackground(BLACK);
+    Texture2D background = LoadTexture("sprites/background.png");
+    ClearBackground(BLACK);    
+    DrawTexturePro(background,
+    (Rectangle){ 0, 0, background.width, background.height },
+    (Rectangle){ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT },
+    (Vector2){ 0, 0 },
+    0.0f,
+    WHITE);
 
     DrawText(config.text, (SCREEN_WIDTH - 146*5)/2, config.rec.y + (config.rec.height - 100)/2, 100, config.text_color);
     DrawText(sound.text,  (SCREEN_WIDTH - 18*5)/2, sound.rec.y + (sound.rec.height - font_size)/2, font_size, sound.text_color);

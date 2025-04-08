@@ -3,10 +3,22 @@
 
 
 void DrawGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, Font myfont) {
-    ClearBackground(BLACK);
-    DrawPlayer(player);
-    DrawEnemies(enemy_list, myfont);
+    Texture2D background = LoadTexture("sprites/background.png");
+    ClearBackground(BLACK);    
+    DrawTexturePro(background,
+    (Rectangle){ 0, 0, background.width, background.height },
+    (Rectangle){ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT },
+    (Vector2){ 0, 0 },
+    0.0f,
+    WHITE);
     DrawProjectiles(projectile_list);
+    DrawPlayer(player);
+    Texture2D enemyTextures[3];
+    enemyTextures[0] = LoadTexture("sprites/inimigo1.png");
+    enemyTextures[1] = LoadTexture("sprites/inimigo2.png");
+    enemyTextures[2] = LoadTexture("sprites/inimigo3.png");
+    DrawEnemies(enemy_list, myfont, enemyTextures);
+        
 }
 
 void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list) {

@@ -37,16 +37,12 @@ int main(void)
     menuJogoSound = LoadSound("sounds/menu_jogo.mp3");
     tiroSound = LoadSound("sounds/tiro.mp3");
     botaoSound = LoadSound("sounds/botao.mp3");
-
+    
     while (!WindowShouldClose() && quitting == 0)
     {
         UpdateGame();
         UpdateDrawFrame();
-        DrawText(TextFormat("%d", j), 500,0,40,WHITE);
-        for (int i = 0; i < 20; i++) {
-            DrawText(TextFormat("W: %s", enemy_list.enemies[i].word), 0, 25 * i, 20, WHITE);
-        }
-        j++;
+        
 
     }
     // Libera os recursos de áudio
@@ -54,6 +50,10 @@ int main(void)
     UnloadSound(menuJogoSound);
     UnloadSound(tiroSound);
     UnloadSound(botaoSound);
+
+    //pa liberar os recursos de textura
+
+
     CloseAudioDevice(); // Fecha o sistema de áudio
     UnloadFont(myfont);
     CloseWindow();

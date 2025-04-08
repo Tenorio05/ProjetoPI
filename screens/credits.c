@@ -10,7 +10,17 @@ void SetCredits(void) {
 
 void DrawCredits(void) {
     SetCredits();
-    ClearBackground(BLACK);
+    Texture2D background = LoadTexture("sprites/background.png");
+
+    
+    
+    ClearBackground(BLACK);    
+    DrawTexturePro(background,
+    (Rectangle){ 0, 0, background.width, background.height },
+    (Rectangle){ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT },
+    (Vector2){ 0, 0 },
+    0.0f,
+    WHITE);
 
     DrawText(credit.text, (SCREEN_WIDTH - 77*5)/2, credit.rec.y + (credit.rec.height - 100)/2, 100, credit.text_color);
     DrawText(back.text,   (SCREEN_WIDTH - 33*5)/2, back.rec.y  + (back.rec.height - font_size)/2, font_size, back.text_color);

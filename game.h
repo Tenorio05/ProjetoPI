@@ -21,6 +21,9 @@ typedef struct Enemy {
     int index_typing;
     int locked;
     float delay_speed;
+    int texture_index;
+    float angle;
+
 } Enemy;
 
 typedef struct Projectile {
@@ -82,7 +85,8 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* proje
 
 // enemy.c
 void InitTexts(void);
-void DrawEnemies(EnemyList* enemy_list, Font myfont);
+void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]);
+
 void SpawnEnemy(EnemyList* enemy_list);
 void UpdateEnemyWaves(EnemyList* enemy_list);
 void MoveEnemies(EnemyList* enemy_list, Player* player);

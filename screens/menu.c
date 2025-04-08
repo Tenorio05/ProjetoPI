@@ -7,13 +7,11 @@ Button name, play, sett, cred, quit;
 //DrawText("_____________________________________________________________________________________________", 0, credit.rec.y - 15, 50, RED); // DEBUG
 
 void SetMenu(void) {
-    name.rec = (Rectangle) {rec.x - 30, rec.y - 240, rec.width, rec.height};
-    play.rec = (Rectangle) {rec.x, rec.y -  40, rec.width, rec.height}; play.rec_color = RAYWHITE;
-    sett.rec = (Rectangle) {rec.x, rec.y +  60, rec.width, rec.height}; sett.rec_color = RAYWHITE;
-    cred.rec = (Rectangle) {rec.x, rec.y + 160, rec.width, rec.height}; cred.rec_color = RAYWHITE;
-    quit.rec = (Rectangle) {rec.x, rec.y + 260, rec.width, rec.height}; quit.rec_color = RAYWHITE;
+    play.rec = (Rectangle) {rec.x, rec.y +  40, rec.width, rec.height}; play.rec_color = RAYWHITE;
+    sett.rec = (Rectangle) {rec.x, rec.y +  130, rec.width, rec.height}; sett.rec_color = RAYWHITE;
+    cred.rec = (Rectangle) {rec.x, rec.y + 220, rec.width, rec.height}; cred.rec_color = RAYWHITE;
+    quit.rec = (Rectangle) {rec.x, rec.y + 310, rec.width, rec.height}; quit.rec_color = RAYWHITE;
 
-    strcpy(name.text, "CIn-Type");        name.text_color = RAYWHITE;
     strcpy(play.text, "Jogar");           play.text_color = BLACK;
     strcpy(sett.text, "Configurações");   sett.text_color = BLACK;
     strcpy(cred.text, "Créditos");        cred.text_color = BLACK;
@@ -23,13 +21,19 @@ void SetMenu(void) {
 void DrawMenu(void) {
     SetMenu();
     ClearBackground(BLACK);
-
+    Texture2D background = LoadTexture("sprites/backgroundmenu.png");
+    
+    DrawTexturePro(background,
+    (Rectangle){ 0, 0, background.width, background.height },
+    (Rectangle){ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT },
+    (Vector2){ 0, 0 },
+    0.0f,
+    WHITE);
     DrawRectangleRounded(play.rec, 0.5, 10, play.rec_color);
     DrawRectangleRounded(sett.rec, 0.5, 10, sett.rec_color);
     DrawRectangleRounded(cred.rec, 0.5, 10, cred.rec_color);
     DrawRectangleRounded(quit.rec, 0.5, 10, quit.rec_color);
     
-    DrawText(name.text, (SCREEN_WIDTH - 564)/2, name.rec.y + (play.rec.height - 120)/2, 120, name.text_color);
     DrawText(play.text, (SCREEN_WIDTH - 28*5)/2, play.rec.y + (play.rec.height - font_size)/2, font_size, play.text_color);
     DrawText(sett.text, (SCREEN_WIDTH - 73*5)/2, sett.rec.y + (sett.rec.height - font_size)/2, font_size, sett.text_color);
     DrawText(cred.text, (SCREEN_WIDTH - 43*5)/2, cred.rec.y + (cred.rec.height - font_size)/2, font_size, cred.text_color);
