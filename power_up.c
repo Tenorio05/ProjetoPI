@@ -29,7 +29,7 @@ void Power_up_time(EnemyList* enemyList, double time_pass, float normal_speed, i
 void Power_up_delet(EnemyList* enemyList, int number_enemies){ // mata uma quantidade de inimigos
 
     for (int i = 0; i < number_enemies; i++){
-        RemoveEnemy(enemyList, 0);    
+        if (enemyList->qty_enemies > 0) RemoveEnemy(enemyList, 0);  
     }
 
 }
