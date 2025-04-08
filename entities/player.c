@@ -21,9 +21,18 @@ void CreatePlayer(Player* player) {
     player->color = YELLOW;
     nave = LoadTexture("sprites/nave.png");
     mira = LoadTexture("sprites/mira.png");
+
+    InitLives(player);  // Inicializa o sistema de vidas
 }
 void DrawPlayer(Player* player) {
     Vector2 center = {player->rect.width / 2, player->rect.height / 2};
+
+    if (IsPlayerInvincible(player)) {
+        // Faz o jogador piscar quando está invencível
+        if ((int)(player->invincible * 10) % 2 == 0) {
+            return;  // Não desenha o jogador neste frame (efeito de piscar)
+        }
+    }
 
     if (abs(angle_enemy - player->angle) > 6) {
         if (angle_enemy < player->angle) {

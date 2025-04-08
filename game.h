@@ -10,6 +10,8 @@ typedef struct Player {
     Rectangle rect;
     Color color;
     float angle;
+    int lives;         // Número de vidas do jogador
+    float invincible;  // Tempo de invencibilidade após perder uma vida
 } Player;
 
 typedef struct Enemy {
@@ -61,7 +63,8 @@ typedef enum GameScreen {
     GAMEPLAY = 1,
     SETTINGS = 2,
     CREDITS = 3,
-    QUIT = 4
+    QUIT = 4,
+    GAME_OVER = 5  // Nova tela de Game Over
 } GameScreen;
 
 typedef struct Power_up
@@ -142,6 +145,16 @@ void print_power_up_bar(Power_up_list power_up_list); // printa a barra com os p
 void activate_power_up(Power_up_list* power_up_list, EnemyList* enemyList, double *time_pass, int* freeze); // ativa o power up da barra
 void Inicializar_power_up_list(Power_up_list* lista); // inicializa a lista de power ups zerada
 
+// lives.c
+void InitLives(Player* player);
+void LoseLife(Player* player);
+void UpdateInvincibility(Player* player);
+bool IsPlayerInvincible(Player* player);
+void DrawLives(Player* player);
+void DrawGameOver(void);
+void UpdateGameOver(void);
+void ResetGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list);
+
 
 #include "screens/game.c"
 #include "entities/enemy.c"
@@ -151,5 +164,6 @@ void Inicializar_power_up_list(Power_up_list* lista); // inicializa a lista de p
 #include "entities/player.c"
 #include "typing.c"
 #include "entities/projectile.c"
-#include "power_up.c"
+#include "entities/power_up.c"
+#include "lives.c"
 #endif

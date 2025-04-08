@@ -13,13 +13,14 @@ void DrawGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_
     WHITE);
     DrawProjectiles(projectile_list);
     DrawPlayer(player);
+    DrawLives(player);
     Texture2D enemyTextures[3];
     enemyTextures[0] = LoadTexture("sprites/inimigo1.png");
     enemyTextures[1] = LoadTexture("sprites/inimigo2.png");
     enemyTextures[2] = LoadTexture("sprites/inimigo3.png");
     DrawEnemies(enemy_list, myfont, enemyTextures);
     print_power_up_bar(power_up_list); // printa a barra de power ups
-        
+    
 }
 
 void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, double* time_pass, int *freeze, Power_up_list* power_up_list) {
@@ -30,6 +31,7 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* proje
         HandleTyping(player, enemy_list, projectile_list, 259);
     }
     
+    UpdateInvincibility(player);
     UpdateEnemyWaves(enemy_list);
     MoveEnemies(enemy_list, player, freeze, time_pass, power_up_list);
     UpdateProjectile(projectile_list, enemy_list);

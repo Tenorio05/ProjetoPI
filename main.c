@@ -76,9 +76,15 @@ void UpdateGame() {
         case MENU:            
             UpdateMenu(); // Lida com a lógica do MENU (Funcionamento dos botões)
             break;
-        case GAMEPLAY: 
+        case GAMEPLAY:
+            if (player.lives <= 0) {
+                ResetGame(&player, &enemy_list, &projectile_list);
+            } 
             UpdateGameplay(&player, &enemy_list, &projectile_list, &time_pass, &freeze, &power_up_list); // Lida com a lógica do player e inimigos
             break;
+        case GAME_OVER:
+            UpdateGameOver();
+            break;        
         case SETTINGS: 
             UpdateSettings(); 
             break;
@@ -100,6 +106,9 @@ void UpdateDrawFrame(void) {
         case GAMEPLAY: 
             DrawGame(&player, &enemy_list, &projectile_list, myfont, power_up_list); // Desenha na tela o player e inimigos
             break;
+        case GAME_OVER:
+            DrawGameOver();
+            break;        
         case SETTINGS: 
             DrawSettings(); 
             break;

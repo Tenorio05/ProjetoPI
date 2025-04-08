@@ -181,6 +181,7 @@ void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* tim
             if (enemy_list->enemies[i].locked) {
                 state = NOTLOCKED;
             }
+            LoseLife(player);
             RemoveEnemy(enemy_list, i);
             i--;
         }

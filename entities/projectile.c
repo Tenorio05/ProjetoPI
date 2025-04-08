@@ -58,7 +58,7 @@ void CreateProjectile(ProjectileList* projectile_list, Player* player, EnemyList
     projectile.center = (Vector2) {player->rect.x - ((dx / dy) * 30), player->rect.y - 30};
     projectile.radius = 4;
     projectile.target = enemy_list->enemies[index_enemy];
-    projectile.speed = 7;
+    projectile.speed = 14;
     
     int qty_projectiles = projectile_list->qty_projectiles;
     projectile_list->projectiles[qty_projectiles] = projectile;
