@@ -17,6 +17,11 @@ int enemies_spawned_this_wave = 0;
 
 Texture2D enemy_textures[3];
 
+
+float enemy_speed_multiplier = 1.0f;
+float medium_word_chance = 0.2f;
+float long_word_chance = 0.1f;
+
 void InitTexts(void) {
     FILE *fileshort = fopen("txt_files/shortwords.txt", "r");
     FILE *filemedium = fopen("txt_files/mediumwords.txt", "r");
@@ -34,6 +39,15 @@ void InitTexts(void) {
     fclose(filelong);
 }
 
+bool IsPositionFree(EnemyList* enemy_list, Rectangle new_enemy_rect) {
+    for (int i = 0; i < enemy_list->qty_enemies; i++) {
+        if (CheckCollisionRecs(new_enemy_rect, enemy_list->enemies[i].rect)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]) {
     for (int i = 0; i < enemy_list->qty_enemies; i++) {
         Enemy enemy = enemy_list->enemies[i];
@@ -45,7 +59,6 @@ void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]) 
         };
         Vector2 origin = { texture.width / 2.0f, texture.height / 2.0f };
 
-        // Desenha o inimigo com textura e rotação
         DrawTexturePro(texture,
             (Rectangle){ 0, 0, (float)texture.width, (float)texture.height },
             (Rectangle){ center.x, center.y, enemy.rect.width, enemy.rect.height },
@@ -54,7 +67,6 @@ void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]) 
             WHITE
         );
 
-        // Medida do texto
         int word_size = strlen(enemy.word);
         float text_size = 30.0f;
         float spacing = 0;
@@ -62,43 +74,61 @@ void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]) 
         float text_x = center.x - word_size_measure.x / 2;
         float text_y = center.y + enemy.rect.height / 2.0f;
 
-        // Desenha as letras da palavra
         if (enemy.index_typing == 0) {
             DrawTextEx(myfont, enemy.word, (Vector2){ text_x, text_y }, text_size, spacing, WHITE);
         } else {
             for (int j = 0; j < word_size; j++) {
-                if (j < enemy.index_typing) {
-                    // Letra já digitada, não desenha
-                    continue;
-                } else {
-                    Color letterColor = enemy.locked ? BLUE : WHITE;
-                    DrawTextEx(myfont, TextFormat("%c", enemy.word[j]),
-                               (Vector2){ text_x + (15 * j), text_y }, text_size, spacing, letterColor);
-                }
+                if (j < enemy.index_typing) continue;
+                Color letterColor = enemy.locked ? BLUE : WHITE;
+                DrawTextEx(myfont, TextFormat("%c", enemy.word[j]),
+                           (Vector2){ text_x + (15 * j), text_y }, text_size, spacing, letterColor);
             }
         }
     }
 }
 
-
-
 void SpawnEnemy(EnemyList* enemy_list) {
-    int i = GetRandomValue(0, 2);
+    int i;
+    float chance = GetRandomValue(0, 100) / 100.0f;
+
+    if (chance < long_word_chance) {
+        i = 2;
+    } else if (chance < long_word_chance + medium_word_chance) {
+        i = 1;
+    } else {
+        i = 0;
+    }
+
     int size_chosen = size_enemies[i];
 
     Enemy enemy;
     enemy.color = RED;
-    enemy.rect = (Rectangle) {GetRandomValue(0, 1280), -100, size_chosen, size_chosen};
-    enemy.speed = 2.0;
+    enemy.rect.width = size_chosen;
+    enemy.rect.height = size_chosen;
+    enemy.speed = 2.0f * enemy_speed_multiplier;
     enemy.locked = 0;
     enemy.index_typing = 0;
     enemy.delay_speed = 0;
-    
-    if (size_chosen == size_enemies[0]) {
+
+    Rectangle new_enemy_rect;
+    int attempts = 0;
+    do {
+        new_enemy_rect = (Rectangle){
+            GetRandomValue(0, 1280 - size_chosen),
+            -100,
+            size_chosen,
+            size_chosen
+        };
+        attempts++;
+    } while (!IsPositionFree(enemy_list, new_enemy_rect) && attempts < 10);
+
+    enemy.rect = new_enemy_rect;
+
+    if (i == 0) {
         strcpy(enemy.word, shortwords[GetRandomValue(0,199)]);
-    } else if (size_chosen == size_enemies[1]) {
+    } else if (i == 1) {
         strcpy(enemy.word, mediumwords[GetRandomValue(0,99)]);
-    } else if (size_chosen == size_enemies[2]) {
+    } else {
         strcpy(enemy.word, longwords[GetRandomValue(0,99)]);
     }
 
@@ -112,27 +142,34 @@ void SpawnEnemy(EnemyList* enemy_list) {
                     strcpy(enemy.word, shortwords[GetRandomValue(0,199)]);
                 } else if (size_chosen == size_enemies[1]) {
                     strcpy(enemy.word, mediumwords[GetRandomValue(0,99)]);
-                } else if (size_chosen == size_enemies[2]) {
+                } else {
                     strcpy(enemy.word, longwords[GetRandomValue(0,99)]);
                 }
                 break;
             }
         }
     }
-    
-    enemy.texture_index = i; // 0, 1 ou 2, baseado no tamanho
+
+    enemy.texture_index = i;
     enemy.angle = 0.0f;
     enemy.health = strlen(enemy.word);
     enemy_list->enemies[enemy_list->qty_enemies] = enemy;
     enemy_list->qty_enemies++;
 }
+
 void UpdateEnemyWaves(EnemyList* enemy_list) {
     wave_timer += GetFrameTime();
 
     if (wave_timer >= wave_interval) {
         wave_timer = 0.0f;
         enemies_spawned_this_wave = 0;
+
+        
+        enemy_speed_multiplier += 0.1f;
+        if (medium_word_chance < 0.5f) medium_word_chance += 0.05f;
+        if (long_word_chance < 0.3f) long_word_chance += 0.03f;
     }
+
     if (enemies_spawned_this_wave < enemies_per_wave) {
         SpawnEnemy(enemy_list);
         enemies_spawned_this_wave++;
@@ -140,8 +177,8 @@ void UpdateEnemyWaves(EnemyList* enemy_list) {
 }
 
 void RemoveEnemy(EnemyList* enemy_list, int index_enemy) {
-    PlaySound(morteSound); // Toca o som de morte quando inimigo morre
-    for (int i = index_enemy; i < enemy_list->qty_enemies; i++) {
+    PlaySound(morteSound);
+    for (int i = index_enemy; i < enemy_list->qty_enemies - 1; i++) {
         enemy_list->enemies[i] = enemy_list->enemies[i + 1];
     }
     enemy_list->qty_enemies--;
@@ -158,6 +195,7 @@ void MoveEnemies(EnemyList* enemy_list, Player* player) {
         if (enemy.health == 0) {
             RemoveEnemy(enemy_list, i);
             i--;
+            continue;
         }
 
         if (!CheckCollisionRecs(player->rect, enemy.rect)) {
@@ -175,13 +213,12 @@ void MoveEnemies(EnemyList* enemy_list, Player* player) {
 
 void DelayEnemies(EnemyList* enemy_list) {
     for (int i = 0; i < enemy_list->qty_enemies; i++) {
-        Enemy enemy = enemy_list->enemies[i];
-        if (enemy.delay_speed > 0) {
-            enemy_list->enemies[i].speed = 0.5;
-            enemy_list->enemies[i].delay_speed -= GetFrameTime();
+        Enemy* enemy = &enemy_list->enemies[i];
+        if (enemy->delay_speed > 0) {
+            enemy->speed = 0.5f;
+            enemy->delay_speed -= GetFrameTime();
         } else {
-            enemy_list->enemies[i].speed = 2.0;
+            enemy->speed = 2.0f * enemy_speed_multiplier;
         }
     }
 }
-
