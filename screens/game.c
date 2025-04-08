@@ -5,12 +5,16 @@
 void DrawGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, Font myfont,Power_up_list power_up_list) {
     Texture2D background = LoadTexture("sprites/background.png");
     ClearBackground(BLACK);    
-    DrawTexturePro(background,
-    (Rectangle){ 0, 0, background.width, background.height },
-    (Rectangle){ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT },
-    (Vector2){ 0, 0 },
-    0.0f,
-    WHITE);
+
+    DrawTexturePro(
+        background,
+        (Rectangle){ 0, 0, background.width, background.height },
+        (Rectangle){ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT },
+        (Vector2){ 0, 0 },
+        0.0f,
+        WHITE
+    );
+    
     DrawProjectiles(projectile_list);
     DrawPlayer(player);
     DrawLives(player);
@@ -30,6 +34,7 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* proje
     } else if (IsKeyPressed(KEY_BACKSPACE)) {
         HandleTyping(player, enemy_list, projectile_list, 259);
     }
+    
     
     UpdateInvincibility(player);
     UpdateEnemyWaves(enemy_list);

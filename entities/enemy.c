@@ -14,6 +14,9 @@ float wave_timer = 0.0f;
 float wave_interval = 10.0f;
 int enemies_per_wave = 4;
 int enemies_spawned_this_wave = 0;
+float enemy_speed_multiplier = 1.0f;
+float medium_word_chance = 0.2f;
+float long_word_chance = 0.1f;
 
 Texture2D enemy_textures[3];
 
@@ -32,6 +35,15 @@ void InitTexts(void) {
     fclose(fileshort);
     fclose(filemedium);
     fclose(filelong);
+}
+
+bool IsPositionFree(EnemyList* enemy_list, Rectangle new_enemy_rect) {
+    for (int i = 0; i < enemy_list->qty_enemies; i++) {
+        if (CheckCollisionRecs(new_enemy_rect, enemy_list->enemies[i].rect)) {
+            return false;
+        }
+    }
+    return true;
 }
 
 void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]) {
@@ -83,22 +95,47 @@ void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]) 
 
 
 void SpawnEnemy(EnemyList* enemy_list) {
-    int i = GetRandomValue(0, 2);
+    int i;
+    float chance = GetRandomValue(0, 100) / 100.0f;
+
+    if (chance < long_word_chance) {
+        i = 2;
+    } else if (chance < long_word_chance + medium_word_chance) {
+        i = 1;
+    } else {
+        i = 0;
+    }
+
     int size_chosen = size_enemies[i];
 
     Enemy enemy;
     enemy.color = RED;
-    enemy.rect = (Rectangle) {GetRandomValue(0, 1280), -100, size_chosen, size_chosen};
-    enemy.speed = 2.0;
+    enemy.rect.width = size_chosen;
+    enemy.rect.height = size_chosen;
+    enemy.speed = 2.0f * enemy_speed_multiplier;
     enemy.locked = 0;
     enemy.index_typing = 0;
     enemy.delay_speed = 0;
+
+    Rectangle new_enemy_rect;
+    int attempts = 0;
+    do {
+        new_enemy_rect = (Rectangle){
+            GetRandomValue(0, 1280 - size_chosen),
+            -100,
+            size_chosen,
+            size_chosen
+        };
+        attempts++;
+    } while (!IsPositionFree(enemy_list, new_enemy_rect) && attempts < 10);
     
-    if (size_chosen == size_enemies[0]) {
+    enemy.rect = new_enemy_rect;
+
+    if (i == 0) {
         strcpy(enemy.word, shortwords[GetRandomValue(0,199)]);
-    } else if (size_chosen == size_enemies[1]) {
+    } else if (i == 1) {
         strcpy(enemy.word, mediumwords[GetRandomValue(0,99)]);
-    } else if (size_chosen == size_enemies[2]) {
+    } else {
         strcpy(enemy.word, longwords[GetRandomValue(0,99)]);
     }
 
@@ -126,13 +163,19 @@ void SpawnEnemy(EnemyList* enemy_list) {
     enemy_list->enemies[enemy_list->qty_enemies] = enemy;
     enemy_list->qty_enemies++;
 }
+
 void UpdateEnemyWaves(EnemyList* enemy_list) {
     wave_timer += GetFrameTime();
 
     if (wave_timer >= wave_interval) {
         wave_timer = 0.0f;
         enemies_spawned_this_wave = 0;
+        enemy_speed_multiplier += 0.1f;
+
+        if (medium_word_chance < 0.5f) medium_word_chance += 0.05f;
+        if (long_word_chance < 0.3f) long_word_chance += 0.03f;
     }
+
     if (enemies_spawned_this_wave < enemies_per_wave) {
         SpawnEnemy(enemy_list);
         enemies_spawned_this_wave++;
@@ -163,7 +206,7 @@ void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* tim
         if (enemy.health == 0) {
             RemoveEnemy(enemy_list, i);
             i--;
-
+    
             int chance = rand() % 10 + 1;
             if (chance <= 2){ // power up de congelar o tempo
                 Adicionar_power_up(1, power_up_list);
@@ -172,6 +215,7 @@ void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* tim
             else if (chance <= 4){ // power up de destruir alguns dos asteroides
                 Adicionar_power_up(2,power_up_list);
             }
+            continue;
         }
 
         if (!CheckCollisionRecs(player->rect, enemy.rect)) {
