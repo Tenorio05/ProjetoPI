@@ -38,6 +38,7 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* proje
         currentScreen = PAUSE;
     }
     
+    
     UpdateInvincibility(player);
     UpdateEnemyWaves(enemy_list);
     MoveEnemies(enemy_list, player, freeze, time_pass, power_up_list);

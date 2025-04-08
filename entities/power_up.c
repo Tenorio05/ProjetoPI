@@ -119,3 +119,5 @@ void activate_power_up(Power_up_list* power_up_list, EnemyList* enemyList, doubl
         }
     }
 }
+
+
