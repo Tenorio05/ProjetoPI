@@ -9,9 +9,12 @@ Player player;
 EnemyList enemy_list;
 Font myfont;
 ProjectileList projectile_list = {.qty_projectiles = 0};
+Power_up_list power_up_list;
 
 int quitting = 0;
 int j = 0;
+double time_pass; // variável usada para o tempo de congelamento
+int freeze = 0; // ativar ou não o congelamento
 
 // Declaração dos sons como variáveis globais para que sejam usadas nos outros módulos
 Sound morteSound;
@@ -30,6 +33,7 @@ int main(void)
     CreatePlayer(&player);
     InitTexts();
     myfont = LoadFont("COUR.TTF");
+    Inicializar_power_up_list(&power_up_list); // inicia a lista com os power ups
 
     // Carrega os arquivos de som
     // Aqui, tem que ter baixado os arquivos mp3, dai vou deixar um link de um drive com todos os arquivos
@@ -73,7 +77,7 @@ void UpdateGame() {
             UpdateMenu(); // Lida com a lógica do MENU (Funcionamento dos botões)
             break;
         case GAMEPLAY: 
-            UpdateGameplay(&player, &enemy_list, &projectile_list); // Lida com a lógica do player e inimigos
+            UpdateGameplay(&player, &enemy_list, &projectile_list, &time_pass, &freeze, &power_up_list); // Lida com a lógica do player e inimigos
             break;
         case SETTINGS: 
             UpdateSettings(); 
@@ -94,7 +98,7 @@ void UpdateDrawFrame(void) {
             DrawMenu(); // Printa na tela o menu 
             break;
         case GAMEPLAY: 
-            DrawGame(&player, &enemy_list, &projectile_list, myfont); // Desenha na tela o player e inimigos
+            DrawGame(&player, &enemy_list, &projectile_list, myfont, power_up_list); // Desenha na tela o player e inimigos
             break;
         case SETTINGS: 
             DrawSettings(); 
