@@ -86,12 +86,12 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* proje
 // enemy.c
 void InitTexts(void);
 void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]);
-
 void SpawnEnemy(EnemyList* enemy_list);
 void UpdateEnemyWaves(EnemyList* enemy_list);
 void MoveEnemies(EnemyList* enemy_list, Player* player);
 void RemoveEnemy(EnemyList* enemy_list, int index_enemy);
 void DelayEnemies(EnemyList* enemy_list);
+bool IsPositionFree(EnemyList* enemy_list, Rectangle new_enemy_rect);
 
 // menu.c
 void SetMenu(void);
@@ -131,3 +131,4 @@ void CreateProjectile(ProjectileList* projectile_list, Player* player, EnemyList
 #include "typing.c"
 #include "entities/projectile.c"
 #endif
+
