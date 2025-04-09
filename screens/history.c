@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "game.h"
 
-char text[500] = "Os invasores galácticos, em sua grande \"sabedoria\", decidiram usar palavras aleatórias como escudo para suas naves. Mas o astuto escravo do CIn, o mais rápido digitador da galáxia, está pronto para detê-los! Com dedos mais rápidos que lasers e uma destreza inumana no teclado, ele defende a Terra da ameaça mais absurda do universo: um combate de digitação intergaláctico!";
+char text[500] = "Os invasores galácticos, em sua grande \"sabedoria\", decidiram usar palavras aleatórias como escudo para suas naves. Mas o astuto guerreiro do CIn, o mais rápido digitador da galáxia, está pronto para detê-los! Com dedos mais rápidos que lasers e uma destreza inumana no teclado, ele defende a Terra da ameaça mais absurda do universo: um combate de digitação intergaláctico!";
 int pos_x = 1280;
 int scroll_speed = 350.0f;
 

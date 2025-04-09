@@ -40,5 +40,7 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* proje
     MoveEnemies(enemy_list, player, freeze, time_pass, power_up_list, score);
     UpdateProjectile(projectile_list, enemy_list);
     DelayEnemies(enemy_list);
-    activate_power_up(power_up_list, enemy_list, time_pass, freeze, score);
+    if (projectile_list->qty_projectiles == 0) {
+        activate_power_up(power_up_list, enemy_list, time_pass, freeze, score);
+    }
 }

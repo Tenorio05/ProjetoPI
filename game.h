@@ -41,7 +41,7 @@ typedef struct ProjectileList {
 } ProjectileList;
 
 typedef struct EnemyList {
-    Enemy enemies[20];
+    Enemy enemies[200];
     int qty_enemies;
 } EnemyList;
 
@@ -76,7 +76,7 @@ typedef struct Power_up {
 } Power_up;
 
 typedef struct Power_up_list {
-    Power_up power_up[10];
+    Power_up power_up[200];
     int number_power_ups;
     int max_power_up;
 } Power_up_list;
