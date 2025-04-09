@@ -30,7 +30,7 @@ void DrawGameOver(void) {
 
     if (CheckCollisionPointRec(GetMousePosition(), restart.rec)) {
         DrawRectangleRounded(restart.rec, 0.5, 10, restart.text_color);
-        DrawText(restart.text, (SCREEN_WIDTH - 37*5)/2, restart.rec.y + (restart.rec.height - font_size)/2, font_size, restart.rec_color);
+        DrawText(restart.text, (SCREEN_WIDTH - 35*5)/2, restart.rec.y + (restart.rec.height - font_size)/2, font_size, restart.rec_color);
     }
     if (CheckCollisionPointRec(GetMousePosition(), back_menu.rec)) {
         DrawRectangleRounded(back_menu.rec, 0.5, 10, back_menu.text_color);

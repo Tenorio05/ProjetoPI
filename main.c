@@ -37,6 +37,7 @@ int main(void)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "CInType");
     InitAudioDevice(); // Inicializa o sistema de áudio do Raylib
     SetTargetFPS(60);
+    ToggleFullscreen();
 
     CreatePlayer(&player);
     InitTexts();
@@ -57,6 +58,7 @@ int main(void)
     background = LoadTexture("sprites/background.png");
     background_menu = LoadTexture("sprites/backgroundmenu.png");
     heart = LoadTexture("sprites/heart.png");
+    
     
     while (!WindowShouldClose() && currentScreen != QUIT)
     {
