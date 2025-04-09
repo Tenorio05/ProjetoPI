@@ -182,7 +182,8 @@ void UpdateEnemyWaves(EnemyList* enemy_list) {
     }
 }
 
-void RemoveEnemy(EnemyList* enemy_list, int index_enemy) {
+void RemoveEnemy(EnemyList* enemy_list, int index_enemy, Score* score) {
+    IncreaseScore(score);
     PlaySound(morteSound); // Toca o som de morte quando inimigo morre
     for (int i = index_enemy; i < enemy_list->qty_enemies; i++) {
         enemy_list->enemies[i] = enemy_list->enemies[i + 1];
@@ -190,7 +191,7 @@ void RemoveEnemy(EnemyList* enemy_list, int index_enemy) {
     enemy_list->qty_enemies--;
 } 
 
-void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* time_pass, Power_up_list* power_up_list) {
+void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* time_pass, Power_up_list* power_up_list, Score* score) {
 
     if (*freeze){
         Power_up_time(enemy_list, *time_pass, 2.0, freeze); // 2.0 subtstituir pela velocidade padrão do jogo }
@@ -204,7 +205,7 @@ void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* tim
         float distance = sqrt(dx*dx + dy*dy);
 
         if (enemy.health == 0) {
-            RemoveEnemy(enemy_list, i);
+            RemoveEnemy(enemy_list, i, score);
             i--;
     
             int chance = rand() % 10 + 1;
@@ -226,7 +227,7 @@ void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* tim
                 state = NOTLOCKED;
             }
             LoseLife(player);
-            RemoveEnemy(enemy_list, i);
+            RemoveEnemy(enemy_list, i, score);
             i--;
         }
     }
