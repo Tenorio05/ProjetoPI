@@ -39,8 +39,8 @@ void SetSettings(void) {
 
 void DrawSettings(void) {
     SetSettings();
-    Texture2D background = LoadTexture("sprites/background.png");
-    ClearBackground(BLACK);    
+    ClearBackground(BLACK);
+    
     DrawTexturePro(background,
     (Rectangle){ 0, 0, background.width, background.height },
     (Rectangle){ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT },
@@ -121,6 +121,10 @@ void DrawSettings(void) {
 void UpdateSettings(void) {
     if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), back.rec)) {
         PlaySound(botaoSound); // Toca o som de botão
-        currentScreen = MENU;
+        if (paused) {
+            currentScreen = PAUSE;
+        } else {
+            currentScreen = MENU;
+        }
     }
 }

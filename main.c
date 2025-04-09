@@ -10,10 +10,8 @@ EnemyList enemy_list;
 Font myfont;
 ProjectileList projectile_list = {.qty_projectiles = 0};
 Power_up_list power_up_list;
-Texture2D background_history;
 Score score;
 
-int quitting = 0;
 int j = 0;
 double time_pass; // variável usada para o tempo de congelamento
 int freeze = 0; // ativar ou não o congelamento
@@ -25,29 +23,42 @@ Sound tiroSound;
 Sound botaoSound;
 Sound freezeSound;
 
+Texture2D enemyTextures[3];
+Texture2D background;
+Texture2D background_history;
+Texture2D background_menu;
+Texture2D heart;
+
 void UpdateDrawFrame(void); // Responsável por desenhar na tela o player, inimigos, menu...
 void UpdateGame(void); // Atualiza a movimentação dos inimigos, player, etc.
 
 int main(void)
 {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Projeto FPI");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "CInType");
     InitAudioDevice(); // Inicializa o sistema de áudio do Raylib
     SetTargetFPS(60);
+
     CreatePlayer(&player);
     InitTexts();
     background_history = LoadTexture("sprites\\background_history.png");
     myfont = LoadFont("COUR.TTF");
     Inicializar_power_up_list(&power_up_list); // inicia a lista com os power ups
 
-    // Carrega os arquivos de som
+    // Carrega os arquivos de som e de textura
     // Aqui, tem que ter baixado os arquivos mp3, dai vou deixar um link de um drive com todos os arquivos
     morteSound = LoadSound("sounds/morte.mp3");
     menuJogoSound = LoadSound("sounds/menu_jogo.mp3");
     tiroSound = LoadSound("sounds/tiro.mp3");
     botaoSound = LoadSound("sounds/botao.mp3");
     freezeSound = LoadSound("sounds/freeze.mp3");
+    enemyTextures[0] = LoadTexture("sprites/inimigo1.png");
+    enemyTextures[1] = LoadTexture("sprites/inimigo2.png");
+    enemyTextures[2] = LoadTexture("sprites/inimigo3.png");
+    background = LoadTexture("sprites/background.png");
+    background_menu = LoadTexture("sprites/backgroundmenu.png");
+    heart = LoadTexture("sprites/heart.png");
     
-    while (!WindowShouldClose() && quitting == 0)
+    while (!WindowShouldClose() && currentScreen != QUIT)
     {
         UpdateDrawFrame();
         UpdateGame();
@@ -60,9 +71,14 @@ int main(void)
     UnloadSound(botaoSound);
     UnloadSound(freezeSound);
     UnloadEnemyTextures();
+    UnloadTexture(background);
+    UnloadTexture(background_menu);
+    UnloadTexture(background_history);
+    UnloadTexture(heart);
     UnloadPlayer();
-    CloseAudioDevice(); // Fecha o sistema de áudio
     UnloadFont(myfont);
+
+    CloseAudioDevice(); // Fecha o sistema de áudio
     CloseWindow();
 
     return 0;
@@ -76,14 +92,17 @@ void UpdateGame() {
     }
 
     switch (currentScreen) {
-        case MENU:            
-            UpdateMenu(); // Lida com a lógica do MENU (Funcionamento dos botões)
+        case MENU:
+            UpdateMenu();
             break;
         case GAMEPLAY:
-        UpdateGameplay(&player, &enemy_list, &projectile_list, &time_pass, &freeze, &power_up_list, &score); // Lida com a lógica do player e inimigos
+            UpdateGameplay(&player, &enemy_list, &projectile_list, &time_pass, &freeze, &power_up_list, &score);
             break;
         case HISTORY:
             UpdateHistory();
+            break;
+        case PAUSE:
+            UpdatePause(&player, &enemy_list, &projectile_list);
             break;
         case GAME_OVER:
             ResetGame(&player, &enemy_list, &projectile_list);
@@ -105,13 +124,16 @@ void UpdateDrawFrame(void) {
 
     switch (currentScreen) {
         case MENU: 
-            DrawMenu(); // Printa na tela o menu 
+            DrawMenu();
             break;
         case GAMEPLAY: 
-            DrawGame(&player, &enemy_list, &projectile_list, myfont, power_up_list, &score); // Desenha na tela o player e inimigos
+            DrawGame(&player, &enemy_list, &projectile_list, myfont, power_up_list, &score);
             break;
         case HISTORY:
             DrawHistory(background_history, myfont);
+            break;
+        case PAUSE:
+            DrawPause();
             break;
         case GAME_OVER:
             DrawGameOver();
@@ -123,7 +145,6 @@ void UpdateDrawFrame(void) {
             DrawCredits(); 
             break;
         case QUIT: 
-            quitting = 1; 
             break;
     }
     

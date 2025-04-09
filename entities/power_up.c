@@ -100,6 +100,7 @@ void print_power_up_bar(Power_up_list power_up_list){
 void activate_power_up(Power_up_list* power_up_list, EnemyList* enemyList, double *time_pass, int* freeze, Score* score){
     if (IsKeyPressed(KEY_ENTER)) {
         Power_up power_up;
+        power_up.type = 0;
         if(power_up_list->number_power_ups >0){
             power_up_list->number_power_ups--;
             for (int i = 0; i < power_up_list->max_power_up; i++){

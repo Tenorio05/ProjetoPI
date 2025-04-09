@@ -3,7 +3,6 @@
 
 
 void DrawGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, Font myfont,Power_up_list power_up_list, Score* score) {
-    Texture2D background = LoadTexture("sprites/background.png");
     ClearBackground(BLACK);    
 
     DrawTexturePro(
@@ -19,10 +18,6 @@ void DrawGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_
     DrawProjectiles(projectile_list);
     DrawPlayer(player);
     DrawLives(player);
-    Texture2D enemyTextures[3];
-    enemyTextures[0] = LoadTexture("sprites/inimigo1.png");
-    enemyTextures[1] = LoadTexture("sprites/inimigo2.png");
-    enemyTextures[2] = LoadTexture("sprites/inimigo3.png");
     DrawEnemies(enemy_list, myfont, enemyTextures);
     print_power_up_bar(power_up_list); // printa a barra de power ups
     
@@ -34,6 +29,9 @@ void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* proje
         HandleTyping(player, enemy_list, projectile_list, key_pressed);
     } else if (IsKeyPressed(KEY_BACKSPACE)) {
         HandleTyping(player, enemy_list, projectile_list, 259);
+    }
+    if (IsKeyPressed(KEY_ZERO)) {
+        currentScreen = PAUSE;
     }
     
 

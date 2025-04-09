@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "game.h"
+#include <string.h>
 
 Button name, play, sett, cred, quit;
 
@@ -7,28 +8,23 @@ Button name, play, sett, cred, quit;
 //DrawText("_____________________________________________________________________________________________", 0, credit.rec.y - 15, 50, RED); // DEBUG
 
 void SetMenu(void) {
-    play.rec = (Rectangle) {rec.x, rec.y +  40, rec.width, rec.height}; play.rec_color = RAYWHITE;
-    sett.rec = (Rectangle) {rec.x, rec.y +  130, rec.width, rec.height}; sett.rec_color = RAYWHITE;
-    cred.rec = (Rectangle) {rec.x, rec.y + 220, rec.width, rec.height}; cred.rec_color = RAYWHITE;
-    quit.rec = (Rectangle) {rec.x, rec.y + 310, rec.width, rec.height}; quit.rec_color = RAYWHITE;
-
-    strcpy(play.text, "Jogar");           play.text_color = BLACK;
-    strcpy(sett.text, "Configurações");   sett.text_color = BLACK;
-    strcpy(cred.text, "Créditos");        cred.text_color = BLACK;
-    strcpy(quit.text, "Sair");            quit.text_color = BLACK;
+    play = (Button) {{rec.x, rec.y +  40, rec.width, rec.height}, "Jogar",         RAYWHITE, BLACK};
+    sett = (Button) {{rec.x, rec.y + 130, rec.width, rec.height}, "Configurações", RAYWHITE, BLACK};
+    cred = (Button) {{rec.x, rec.y + 220, rec.width, rec.height}, "Créditos",      RAYWHITE, BLACK};
+    quit = (Button) {{rec.x, rec.y + 310, rec.width, rec.height}, "Sair",          RAYWHITE, BLACK};
 }
 
 void DrawMenu(void) {
     SetMenu();
     ClearBackground(BLACK);
-    Texture2D background = LoadTexture("sprites/backgroundmenu.png");
     
-    DrawTexturePro(background,
-    (Rectangle){ 0, 0, background.width, background.height },
+    DrawTexturePro(background_menu,
+    (Rectangle){ 0, 0, background_menu.width, background_menu.height },
     (Rectangle){ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT },
     (Vector2){ 0, 0 },
     0.0f,
     WHITE);
+    
     DrawRectangleRounded(play.rec, 0.5, 10, play.rec_color);
     DrawRectangleRounded(sett.rec, 0.5, 10, sett.rec_color);
     DrawRectangleRounded(cred.rec, 0.5, 10, cred.rec_color);

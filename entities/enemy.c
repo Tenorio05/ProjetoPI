@@ -40,7 +40,7 @@ void InitTexts(void) {
 void UnloadEnemyTextures() {
     UnloadTexture(enemy_textures[0]);
     UnloadTexture(enemy_textures[1]);
-    UnloadTexture(enemy_textures[2]); 
+    UnloadTexture(enemy_textures[2]);
 }
 
 void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]) {

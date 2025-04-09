@@ -11,7 +11,7 @@ void DrawHistory(Texture2D background, Font myfont) {
     DrawRectangle(0, (720/2 - 50), 1280, 100, WHITE);
     DrawTextEx(GetFontDefault(), text, (Vector2) {pos_x, (720/2 - 10)}, 30, 5, BLACK);
 
-    DrawTextEx(GetFontDefault(), "Aperte ENTER para continuar...", (Vector2) {50, (720/2 + 70)}, 30, 5, WHITE);
+    DrawTextEx(GetFontDefault(), "Aperte ENTER para pular...", (Vector2) {50, (720/2 + 70)}, 30, 5, WHITE);
 }
 
 void UpdateHistory() {

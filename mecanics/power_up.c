@@ -26,10 +26,10 @@ void Power_up_time(EnemyList* enemyList, double time_pass, float normal_speed, i
 
 }
 
-void Power_up_delet(EnemyList* enemyList, int number_enemies){ // mata uma quantidade de inimigos
+void Power_up_delet(EnemyList* enemyList, int number_enemies, Score* score){ // mata uma quantidade de inimigos
 
     for (int i = 0; i < number_enemies; i++){
-        if (enemyList->qty_enemies > 0) RemoveEnemy(enemyList, 0);  
+        if (enemyList->qty_enemies > 0) RemoveEnemy(enemyList, 0, score);  
     }
 
 }
@@ -87,7 +87,7 @@ void print_power_up_bar(Power_up_list power_up_list){
     }
 }
 
-void activate_power_up(Power_up_list* power_up_list, EnemyList* enemyList, double *time_pass, int* freeze){
+void activate_power_up(Power_up_list* power_up_list, EnemyList* enemyList, double *time_pass, int* freeze, Score* score){
     if (IsKeyPressed(KEY_ENTER)) {
         Power_up power_up;
         if(power_up_list->number_power_ups >0){
@@ -108,7 +108,7 @@ void activate_power_up(Power_up_list* power_up_list, EnemyList* enemyList, doubl
             }
 
             else if (power_up.type == 2){
-                Power_up_delet(enemyList, 3);
+                Power_up_delet(enemyList, 3, score);
             }
 
             for (int i = 0; i < power_up_list->max_power_up; i++){ // move a posição de todos os power ups na barra

@@ -6,7 +6,7 @@ Texture2D heart;
 
 // Inicializa o sistema de vidas para o player
 void InitLives(Player* player) {
-    heart = LoadTexture("sprites\\heart.png");
+    heart = LoadTexture("sprites/heart.png");
     player->lives = 3;       // Inicializa com 3 vidas
     player->invincible = 0;  // Não está invencível no início
 }
@@ -47,35 +47,6 @@ void DrawLives(Player* player) {
     
     // Desenha texto com número de vidas
     DrawText(TextFormat("VIDAS: %d", player->lives), SCREEN_WIDTH - 150, 20, 30, WHITE);
-}
-
-// Desenha a tela de Game Over
-void DrawGameOver(void) {
-    ClearBackground(BLACK);
-    
-    int title_size = 60;
-    char* title = "GAME OVER";
-    int title_width = MeasureText(title, title_size);
-    DrawText(title, SCREEN_WIDTH/2 - title_width/2, 200, title_size, RED);
-    
-    char* subtitle = "Pressione ENTER para jogar novamente";
-    int subtitle_width = MeasureText(subtitle, 30);
-    DrawText(subtitle, SCREEN_WIDTH/2 - subtitle_width/2, 300, 30, WHITE);
-    
-    char* menu_text = "Pressione BACKSPACE para voltar ao menu";
-    int menu_width = MeasureText(menu_text, 30);
-    DrawText(menu_text, SCREEN_WIDTH/2 - menu_width/2, 350, 30, WHITE);
-}
-
-// Atualiza a tela de Game Over
-void UpdateGameOver(void) {
-    if (IsKeyPressed(KEY_ENTER)) {
-        // Reinicia o jogo
-        currentScreen = GAMEPLAY;
-    } else if (IsKeyPressed(KEY_BACKSPACE)) {
-        // Volta para o menu
-        currentScreen = MENU;
-    }
 }
 
 // Reinicia o jogo após Game Over

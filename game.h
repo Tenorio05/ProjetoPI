@@ -48,7 +48,7 @@ typedef struct EnemyList {
 // Menu & Settings
 typedef struct Button {
     Rectangle rec;
-    char text[20];
+    char text[120];
     Color rec_color, text_color;
 } Button;
 
@@ -65,7 +65,8 @@ typedef enum GameScreen {
     SETTINGS = 3,
     CREDITS = 4,
     QUIT = 5,
-    GAME_OVER = 6  // Nova tela de Game Over
+    GAME_OVER = 6,
+    PAUSE = 7
 } GameScreen;
 
 typedef struct Power_up {
@@ -99,10 +100,17 @@ extern Sound tiroSound;
 extern Sound menuJogoSound;
 extern Sound freezeSound;
 
-// Menu & Settings & Credits
-Rectangle rec = {(SCREEN_WIDTH - 400)/2, (SCREEN_HEIGHT - 80)/2, 400, 80};
+extern Texture2D enemyTextures[3];
+extern Texture2D background;
+extern Texture2D background_menu;
+extern Texture2D heart;
+
+// screens
+int paused;
 int font_size = 50;
-Button back = {{(SCREEN_WIDTH - 33*5)/2, SCREEN_HEIGHT/2 + 220, 33*5, 50}, "Voltar", BLACK, RAYWHITE};
+Rectangle rec = {(SCREEN_WIDTH - 400)/2, (SCREEN_HEIGHT - 80)/2, 400, 80};
+Button back = {{(SCREEN_WIDTH - 33*5)/2, SCREEN_HEIGHT/2 + 250, 33*5, 50}, "Voltar", BLACK, RAYWHITE};
+Button back_menu = {{(SCREEN_WIDTH - 400)/2, (SCREEN_HEIGHT)/2 + 180, 400, 80}, "Menu", RAYWHITE, BLACK};
 
 // game.c
 void DrawGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, Font myfont,Power_up_list power_up_list, Score* score);
@@ -131,6 +139,16 @@ void UpdateSettings(void);
 void SetCredits(void);
 void DrawCredits(void);
 void UpdateCredits(void);
+
+// pause.c
+void SetPause(void);
+void DrawPause(void);
+void UpdatePause(Player *player, EnemyList *enemy_list, ProjectileList *projectile_list);
+
+// game_over.c
+void SetGameOver(void);
+void DrawGameOver(void);
+void UpdateGameOver(void);
 
 // history.c
 void DrawHistory(Texture2D background, Font myfont);
@@ -174,14 +192,18 @@ void IncreaseScore(Score* score);
 void InitScore(Score* score);
 
 #include "screens/game.c"
-#include "entities/enemy.c"
 #include "screens/menu.c"
 #include "screens/settings.c"
 #include "screens/credits.c"
 #include "screens/history.c"
+#include "screens/pause.c"
+#include "screens/game_over.c"
+
+#include "entities/enemy.c"
 #include "entities/player.c"
 #include "entities/projectile.c"
 #include "entities/power_up.c"
+
 #include "mecanics/lives.c"
 #include "mecanics/typing.c"
 #include "mecanics/score.c"
