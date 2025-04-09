@@ -11,6 +11,7 @@ Font myfont;
 ProjectileList projectile_list = {.qty_projectiles = 0};
 Power_up_list power_up_list;
 Texture2D background_history;
+Score score;
 
 int quitting = 0;
 int j = 0;
@@ -22,6 +23,7 @@ Sound morteSound;
 Sound menuJogoSound;
 Sound tiroSound;
 Sound botaoSound;
+Sound freezeSound;
 
 void UpdateDrawFrame(void); // Responsável por desenhar na tela o player, inimigos, menu...
 void UpdateGame(void); // Atualiza a movimentação dos inimigos, player, etc.
@@ -43,6 +45,7 @@ int main(void)
     menuJogoSound = LoadSound("sounds/menu_jogo.mp3");
     tiroSound = LoadSound("sounds/tiro.mp3");
     botaoSound = LoadSound("sounds/botao.mp3");
+    freezeSound = LoadSound("sounds/freeze.mp3");
     
     while (!WindowShouldClose() && quitting == 0)
     {
@@ -55,10 +58,9 @@ int main(void)
     UnloadSound(menuJogoSound);
     UnloadSound(tiroSound);
     UnloadSound(botaoSound);
-
-    //pa liberar os recursos de textura
-
-
+    UnloadSound(freezeSound);
+    UnloadEnemyTextures();
+    UnloadPlayer();
     CloseAudioDevice(); // Fecha o sistema de áudio
     UnloadFont(myfont);
     CloseWindow();
@@ -78,7 +80,7 @@ void UpdateGame() {
             UpdateMenu(); // Lida com a lógica do MENU (Funcionamento dos botões)
             break;
         case GAMEPLAY:
-            UpdateGameplay(&player, &enemy_list, &projectile_list, &time_pass, &freeze, &power_up_list); // Lida com a lógica do player e inimigos
+        UpdateGameplay(&player, &enemy_list, &projectile_list, &time_pass, &freeze, &power_up_list, &score); // Lida com a lógica do player e inimigos
             break;
         case HISTORY:
             UpdateHistory();
@@ -106,7 +108,7 @@ void UpdateDrawFrame(void) {
             DrawMenu(); // Printa na tela o menu 
             break;
         case GAMEPLAY: 
-            DrawGame(&player, &enemy_list, &projectile_list, myfont, power_up_list); // Desenha na tela o player e inimigos
+            DrawGame(&player, &enemy_list, &projectile_list, myfont, power_up_list, &score); // Desenha na tela o player e inimigos
             break;
         case HISTORY:
             DrawHistory(background_history, myfont);

@@ -24,6 +24,12 @@ void CreatePlayer(Player* player) {
 
     InitLives(player);  // Inicializa o sistema de vidas
 }
+
+void UnloadPlayer() {
+    UnloadTexture(nave);
+    UnloadTexture(mira);
+}
+
 void DrawPlayer(Player* player) {
     Vector2 center = {player->rect.width / 2, player->rect.height / 2};
 

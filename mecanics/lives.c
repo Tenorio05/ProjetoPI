@@ -2,8 +2,11 @@
 #include "raylib.h"
 #include "game.h"
 
+Texture2D heart;
+
 // Inicializa o sistema de vidas para o player
 void InitLives(Player* player) {
+    heart = LoadTexture("sprites\\heart.png");
     player->lives = 3;       // Inicializa com 3 vidas
     player->invincible = 0;  // Não está invencível no início
 }
@@ -38,7 +41,8 @@ bool IsPlayerInvincible(Player* player) {
 void DrawLives(Player* player) {
     // Desenha círculos representando as vidas
     for (int i = 0; i < player->lives; i++) {
-        DrawCircle(30 + i * 30, 30, 10, RED);
+        DrawTexturePro(heart, (Rectangle) {0, 0, 1200, 1125}, (Rectangle) {30 + (i * 30), 30, 30, 28}, (Vector2) {0,0}, 0, WHITE);
+        // DrawCircle(30 + i * 30, 30, 10, RED);
     }
     
     // Desenha texto com número de vidas
@@ -93,4 +97,8 @@ void ResetGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile
     
     // Reinicia o estado de digitação
     state = NOTLOCKED;
+    current_wave = 1;
+    wave_clear = false;
+    score.points = 0;
+    enemies_spawned_this_wave = 0;
 }

@@ -37,13 +37,10 @@ void InitTexts(void) {
     fclose(filelong);
 }
 
-bool IsPositionFree(EnemyList* enemy_list, Rectangle new_enemy_rect) {
-    for (int i = 0; i < enemy_list->qty_enemies; i++) {
-        if (CheckCollisionRecs(new_enemy_rect, enemy_list->enemies[i].rect)) {
-            return false;
-        }
-    }
-    return true;
+void UnloadEnemyTextures() {
+    UnloadTexture(enemy_textures[0]);
+    UnloadTexture(enemy_textures[1]);
+    UnloadTexture(enemy_textures[2]); 
 }
 
 void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]) {
@@ -93,8 +90,8 @@ void DrawEnemies(EnemyList* enemy_list, Font myfont, Texture2D enemyTextures[]) 
 
     if (wave_clear == true) {
         if (wave_clear_timer >= 0) { 
-            DrawText(TextFormat("WAVE %d CLEARED!", current_wave - 1), SCREEN_WIDTH/2 - 150, SCREEN_HEIGHT/2 - 30, 30, YELLOW);
-            DrawText(TextFormat("Next wave in %.1f", wave_clear_timer), SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT/2 + 10, 20, YELLOW);
+            DrawText(TextFormat("WAVE %d COMPLETA!", current_wave - 1), SCREEN_WIDTH/2 - 150, SCREEN_HEIGHT/2 - 30, 30, YELLOW);
+            DrawText(TextFormat("Próxima em %.1f", wave_clear_timer), SCREEN_WIDTH/2 - 150, SCREEN_HEIGHT/2 + 10, 20, YELLOW);
             wave_clear_timer -= GetFrameTime();
         } else {
             wave_clear = false;
@@ -184,7 +181,8 @@ void UpdateEnemyWaves(EnemyList* enemy_list) {
     }
 }
 
-void RemoveEnemy(EnemyList* enemy_list, int index_enemy) {
+void RemoveEnemy(EnemyList* enemy_list, int index_enemy, Score* score) {
+    IncreaseScore(score);
     PlaySound(morteSound); // Toca o som de morte quando inimigo morre
     for (int i = index_enemy; i < enemy_list->qty_enemies; i++) {
         enemy_list->enemies[i] = enemy_list->enemies[i + 1];
@@ -192,10 +190,10 @@ void RemoveEnemy(EnemyList* enemy_list, int index_enemy) {
     enemy_list->qty_enemies--;
 } 
 
-void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* time_pass, Power_up_list* power_up_list) {
+void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* time_pass, Power_up_list* power_up_list, Score* score) {
 
     if (*freeze){
-        wave_timer += GetFrameTime();
+        wave_timer -= GetFrameTime();
         Power_up_time(enemy_list, *time_pass, 2.0, freeze); // 2.0 subtstituir pela velocidade padrão do jogo }
     }
 
@@ -207,7 +205,7 @@ void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* tim
         float distance = sqrt(dx*dx + dy*dy);
 
         if (enemy.health == 0) {
-            RemoveEnemy(enemy_list, i);
+            RemoveEnemy(enemy_list, i, score);
             i--;
     
             int chance = rand() % 10 + 1;
@@ -229,7 +227,7 @@ void MoveEnemies(EnemyList* enemy_list, Player* player, int* freeze, double* tim
                 state = NOTLOCKED;
             }
             LoseLife(player);
-            RemoveEnemy(enemy_list, i);
+            RemoveEnemy(enemy_list, i, score);
             i--;
         }
     }
@@ -242,9 +240,10 @@ void DelayEnemies(EnemyList* enemy_list) {
             enemy_list->enemies[i].speed = 0.5;
             enemy_list->enemies[i].delay_speed -= GetFrameTime();
         } else {
-            if (i == 0) enemy.speed = 2.0f;
-            else if (i == 1) enemy.speed = 1.5f;
-            else if (i == 2) enemy.speed = 1.0f;
+            enemy_list->enemies[i].delay_speed = 0;
+            if (enemy_list->enemies[i].texture_index == 0) enemy_list->enemies[i].speed = 2.0f;
+            else if (enemy_list->enemies[i].texture_index == 1) enemy_list->enemies[i].speed = 1.5f;
+            else if (enemy_list->enemies[i].texture_index == 2) enemy_list->enemies[i].speed = 1.0f;
         }
     }
 }
