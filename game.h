@@ -115,6 +115,7 @@ Button back_menu = {{(SCREEN_WIDTH - 400)/2, (SCREEN_HEIGHT)/2 + 180, 400, 80}, 
 // game.c
 void DrawGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, Font myfont,Power_up_list power_up_list, Score* score);
 void UpdateGameplay(Player* player, EnemyList* enemy_list, ProjectileList* projectile_list, double* time_pass, int *freeze, Power_up_list* power_up_list, Score* score);
+
 // enemy.c
 void InitTexts(void);
 void UnloadEnemyTextures(void);
