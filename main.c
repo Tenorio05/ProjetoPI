@@ -11,6 +11,7 @@ Font myfont;
 ProjectileList projectile_list = {.qty_projectiles = 0};
 Power_up_list power_up_list;
 Texture2D background_history;
+Score score;
 
 int quitting = 0;
 int j = 0;
@@ -22,6 +23,7 @@ Sound morteSound;
 Sound menuJogoSound;
 Sound tiroSound;
 Sound botaoSound;
+Sound stopSound;
 
 void UpdateDrawFrame(void); // Responsável por desenhar na tela o player, inimigos, menu...
 void UpdateGame(void); // Atualiza a movimentação dos inimigos, player, etc.
@@ -36,26 +38,27 @@ int main(void)
     background_history = LoadTexture("sprites\\background_history.png");
     myfont = LoadFont("COUR.TTF");
     Inicializar_power_up_list(&power_up_list); // inicia a lista com os power ups
-
+    InitScore(&score);
     // Carrega os arquivos de som
     // Aqui, tem que ter baixado os arquivos mp3, dai vou deixar um link de um drive com todos os arquivos
     morteSound = LoadSound("sounds/morte.mp3");
     menuJogoSound = LoadSound("sounds/menu_jogo.mp3");
     tiroSound = LoadSound("sounds/tiro.mp3");
     botaoSound = LoadSound("sounds/botao.mp3");
+    stopSound = LoadSound("sounds/freeze.mp3");
     
     while (!WindowShouldClose() && quitting == 0)
     {
         UpdateGame();
         UpdateDrawFrame();
-        
-
+    
     }
     // Libera os recursos de áudio
     UnloadSound(morteSound);
     UnloadSound(menuJogoSound);
     UnloadSound(tiroSound);
     UnloadSound(botaoSound);
+    UnloadSound(stopSound);
 
     //pa liberar os recursos de textura
 
@@ -79,7 +82,7 @@ void UpdateGame() {
             UpdateMenu(); // Lida com a lógica do MENU (Funcionamento dos botões)
             break;
         case GAMEPLAY:
-            UpdateGameplay(&player, &enemy_list, &projectile_list, &time_pass, &freeze, &power_up_list); // Lida com a lógica do player e inimigos
+            UpdateGameplay(&player, &enemy_list, &projectile_list, &time_pass, &freeze, &power_up_list, &score); // Lida com a lógica do player e inimigos
             break;
         case HISTORY:
             UpdateHistory();
@@ -107,7 +110,7 @@ void UpdateDrawFrame(void) {
             DrawMenu(); // Printa na tela o menu 
             break;
         case GAMEPLAY: 
-            DrawGame(&player, &enemy_list, &projectile_list, myfont, power_up_list); // Desenha na tela o player e inimigos
+            DrawGame(&player, &enemy_list, &projectile_list, myfont, power_up_list, &score); // Desenha na tela o player e inimigos
             break;
         case HISTORY:
             DrawHistory(background_history, myfont);
