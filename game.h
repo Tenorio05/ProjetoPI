@@ -100,7 +100,7 @@ extern Sound tiroSound;
 extern Sound menuJogoSound;
 extern Sound freezeSound;
 
-extern Texture2D enemyTextures[3];
+extern Texture2D enemy_textures[3];
 extern Texture2D background;
 extern Texture2D background_menu;
 extern Texture2D heart;

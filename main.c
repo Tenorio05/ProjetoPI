@@ -23,7 +23,7 @@ Sound tiroSound;
 Sound botaoSound;
 Sound freezeSound;
 
-Texture2D enemyTextures[3];
+Texture2D enemy_textures[3];
 Texture2D background;
 Texture2D background_history;
 Texture2D background_menu;
@@ -37,7 +37,6 @@ int main(void)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "CInType");
     InitAudioDevice(); // Inicializa o sistema de áudio do Raylib
     SetTargetFPS(60);
-    ToggleFullscreen();
 
     CreatePlayer(&player);
     InitTexts();
@@ -52,9 +51,9 @@ int main(void)
     tiroSound = LoadSound("sounds/tiro.mp3");
     botaoSound = LoadSound("sounds/botao.mp3");
     freezeSound = LoadSound("sounds/freeze.mp3");
-    enemyTextures[0] = LoadTexture("sprites/inimigo1.png");
-    enemyTextures[1] = LoadTexture("sprites/inimigo2.png");
-    enemyTextures[2] = LoadTexture("sprites/inimigo3.png");
+    enemy_textures[0] = LoadTexture("sprites/inimigo1.png");
+    enemy_textures[1] = LoadTexture("sprites/inimigo2.png");
+    enemy_textures[2] = LoadTexture("sprites/inimigo3.png");
     background = LoadTexture("sprites/background.png");
     background_menu = LoadTexture("sprites/backgroundmenu.png");
     heart = LoadTexture("sprites/heart.png");

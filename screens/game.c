@@ -18,7 +18,7 @@ void DrawGame(Player* player, EnemyList* enemy_list, ProjectileList* projectile_
     DrawProjectiles(projectile_list);
     DrawPlayer(player);
     DrawLives(player);
-    DrawEnemies(enemy_list, myfont, enemyTextures);
+    DrawEnemies(enemy_list, myfont, enemy_textures);
     print_power_up_bar(power_up_list); // printa a barra de power ups
     
 }
