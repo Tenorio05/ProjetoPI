@@ -41,6 +41,7 @@ void UpdateProjectile(ProjectileList* projectile_list, EnemyList* enemy_list) {
             enemy_list->enemies[index_enemy].delay_speed = 1.0;
 
         } else {
+            
             projectile_list->projectiles[i].center.x += (-dx / distance) * projectile.speed;
             projectile_list->projectiles[i].center.y -= (dy / distance) * projectile.speed;
         }
